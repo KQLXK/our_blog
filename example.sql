@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS `ourblog` /*!40100 DEFAULT CHARACTER SET utf8 COLL
 USE `ourblog`;
 
 DROP TABLE IF EXISTS `articles`;
-CREATE TABLE `articles`
+CREATE TABLE `article`
 (
     `article_id`  bigint          NOT NULL AUTO_INCREMENT COMMENT '文章ID',
     `author_id`   bigint          NOT NULL COMMENT '作者ID',
