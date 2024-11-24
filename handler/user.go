@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"our_blog/dto"
-	"our_blog/service"
+	"our_blog/service/user"
 )
 
 func UserRegisterHandler(c *gin.Context) {
@@ -19,7 +19,7 @@ func UserRegisterHandler(c *gin.Context) {
 		return
 	}
 
-	data, err := service.UserRegister(&u)
+	data, err := user.UserRegister(&u)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, data)
 		return
