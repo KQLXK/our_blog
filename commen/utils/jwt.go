@@ -5,7 +5,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"log"
 	"os"
-	"our_blog/dao"
+	"our_blog/model/dao"
 	"time"
 )
 

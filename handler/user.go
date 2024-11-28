@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"our_blog/commen/result"
-	"our_blog/dto"
+	"our_blog/model/dto"
 	"our_blog/service/user"
 )
 

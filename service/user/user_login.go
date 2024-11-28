@@ -2,9 +2,9 @@ package user
 
 import (
 	"errors"
-	"our_blog/dao"
-	"our_blog/dto"
-	"our_blog/utils"
+	"our_blog/commen/utils"
+	"our_blog/model/dao"
+	"our_blog/model/dto"
 )
 
 type UserLoginFlow struct {
