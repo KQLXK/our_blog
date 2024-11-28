@@ -9,10 +9,12 @@ type UserRegisterRequest struct {
 }
 
 type UserRegisterResponse struct {
-	UserId     int64     `json:"userId"`
-	Username   string    `json:"username"`
-	Email      string    `json:"email"`
-	CreateTime time.Time `json:"create_Time"`
+	UserId       int64     `json:"userId"`
+	Username     string    `json:"username"`
+	Email        string    `json:"email"`
+	CreateTime   time.Time `json:"create_Time"`
+	AccessToken  string    `json:"access_token"`
+	RefreshToken string    `json:"refresh_token"`
 }
 
 type UserLoginRequest struct {
@@ -21,7 +23,9 @@ type UserLoginRequest struct {
 }
 
 type UserLoginResponse struct {
-	Status  string      `json:"status"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data, omitempty"`
+	UserId      int64     `json:"userId"`
+	Username    string    `json:"username"`
+	Email       string    `json:"email"`
+	CreateTime  time.Time `json:"create_Time"`
+	AccessToken string    `json:"access_token"`
 }

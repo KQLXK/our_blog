@@ -10,9 +10,10 @@ import (
 
 func UserRegisterHandler(c *gin.Context) {
 	var u dto.UserRegisterRequest
-	if err := c.ShouldBind(&u); err != nil {
+	err := c.ShouldBind(&u)
+	if err != nil {
 		log.Println("get userinfo failed, err: ", err)
-		result.Error(c, result.RegisterErrStatus)
+		result.Error(c, result.GetReqErrStatus)
 		return
 	}
 
@@ -31,4 +32,28 @@ func UserRegisterHandler(c *gin.Context) {
 		result.Sucess(c, r)
 	}
 
+}
+
+func UserLoginHandler(c *gin.Context) {
+	var u dto.UserLoginRequest
+	err := c.ShouldBind(&u)
+	if err != nil {
+		log.Println("get userinfo failed, err: ", err)
+		result.Error(c, result.GetReqErrStatus)
+	}
+
+	data, err := user.NewUserLoginFlow(u).Do()
+	if err != nil {
+		if err == user.UsernameNotExistErr {
+			result.Error(c, result.UsernameNotExsitsErrStatus)
+		} else if err == user.PasswordWrongErr {
+			result.Error(c, result.PasswordWrongErr)
+		} else {
+			result.Error(c, result.ServerErrStatus)
+		}
+	} else {
+		r := make(result.R)
+		r.ToMap(data)
+		result.Sucess(c, r)
+	}
 }

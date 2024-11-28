@@ -1,7 +1,8 @@
-package repository
+package dao
 
 import (
 	"log"
+	"our_blog/db"
 	"sync"
 	"time"
 )
@@ -32,7 +33,7 @@ func NewUserDaoInstance() *UserDao {
 }
 
 func (UserDao) CreateUser(user *User) (err error) {
-	err = DB.Create(user).Error
+	err = db.DB.Create(user).Error
 	if err != nil {
 		log.Println("create user failed, err : ", err)
 		return err
@@ -42,7 +43,7 @@ func (UserDao) CreateUser(user *User) (err error) {
 }
 
 func (UserDao) GetUserByUsername(username string) (user User, err error) {
-	err = DB.Where("username = ?", username).First(&user).Error
+	err = db.DB.Where("username = ?", username).First(&user).Error
 	if err != nil {
 		log.Println("get user by username failed, err: ", err)
 		return user, err
@@ -51,7 +52,7 @@ func (UserDao) GetUserByUsername(username string) (user User, err error) {
 }
 
 func (UserDao) GetUserById(userId int) (user User, err error) {
-	err = DB.Where("user_id =?", userId).First(&user).Error
+	err = db.DB.Where("user_id =?", userId).First(&user).Error
 	if err != nil {
 		log.Println("get user by id failed, err : ", err)
 		return user, err
@@ -60,7 +61,7 @@ func (UserDao) GetUserById(userId int) (user User, err error) {
 }
 
 func (UserDao) GetUserByEmail(email string) (user User, err error) {
-	err = DB.Where("email = ?", email).First(&user).Error
+	err = db.DB.Where("email = ?", email).First(&user).Error
 	if err != nil {
 		log.Println("get user by email failed, err: ", err)
 		return user, err
@@ -70,7 +71,7 @@ func (UserDao) GetUserByEmail(email string) (user User, err error) {
 
 // 写一个重置密码的函数
 func (UserDao) UpdateUserPassword(userId int, password string) (err error) {
-	err = DB.Model(&User{}).Where("user_id =?", userId).Update("password", password).Error
+	err = db.DB.Model(&User{}).Where("user_id =?", userId).Update("password", password).Error
 	if err != nil {
 		log.Println("update user password failed, err : ", err)
 		return err

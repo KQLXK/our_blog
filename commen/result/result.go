@@ -7,9 +7,20 @@ import (
 )
 
 var (
-	RegisterErrStatus      = newstatus(http.StatusBadRequest, 40001, "注册发生错误")
-	UsernameExistErrStatus = newstatus(http.StatusBadRequest, 40002, "用户名已存在")
-	EmailExistErrStatus    = newstatus(http.StatusBadRequest, 40003, "邮箱已被注册")
+	RegisterErrStatus          = newstatus(http.StatusBadRequest, 40001, "注册发生错误")
+	UsernameExistErrStatus     = newstatus(http.StatusBadRequest, 40002, "用户名已存在")
+	EmailExistErrStatus        = newstatus(http.StatusBadRequest, 40003, "邮箱已被注册")
+	ParseTokenErrStatus        = newstatus(http.StatusBadRequest, 40004, "token格式有误，请检查你的操作")
+	GetReqErrStatus            = newstatus(http.StatusBadRequest, 40005, "无法获取请求参数")
+	UsernameNotExsitsErrStatus = newstatus(http.StatusBadRequest, 40006, "用户名不存在")
+	PasswordWrongErr           = newstatus(http.StatusBadRequest, 40007, "密码错误")
+
+	//401未被授权的
+	GetTokenErrStatus = newstatus(http.StatusUnauthorized, 40101, "请先进行登录")
+	TokenExiredStatus = newstatus(http.StatusUnauthorized, 40102, "token过期，请重新登录")
+
+	//500服务器内部错误
+	ServerErrStatus = newstatus(http.StatusInternalServerError, 50000, "服务器内部错误")
 )
 
 type Status struct {
