@@ -11,9 +11,11 @@ func SetUpRouter() *gin.Engine {
 
 	userGroup := r.Group("/user")
 	{
-
 		//用户注册
 		userGroup.POST("/register", handler.UserRegisterHandler)
+
+		//用户登录
+		userGroup.POST("/login", handler.UserLoginHandler)
 
 	}
 

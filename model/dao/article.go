@@ -1,7 +1,8 @@
-package repository
+package dao
 
 import (
 	"log"
+	"our_blog/db"
 	"sync"
 	"time"
 )
@@ -33,7 +34,7 @@ func NewArticleDaoInstance() *ArticleDao {
 }
 
 func (ArticleDao) CreateAnArticle(article *Article) (err error) {
-	if err = DB.Create(article).Error; err != nil {
+	if err = db.DB.Create(article).Error; err != nil {
 		log.Println("create an artilce failed, err : ", err)
 		return err
 	}
@@ -41,7 +42,7 @@ func (ArticleDao) CreateAnArticle(article *Article) (err error) {
 }
 
 func (ArticleDao) GetArticleById(articleId uint) (article Article, err error) {
-	if err = DB.Where("article_id =?", articleId).First(&article).Error; err != nil {
+	if err = db.DB.Where("article_id =?", articleId).First(&article).Error; err != nil {
 		log.Println("get an article by id failed, err : ", err)
 		return article, err
 	}
@@ -49,7 +50,7 @@ func (ArticleDao) GetArticleById(articleId uint) (article Article, err error) {
 }
 
 func (ArticleDao) GetAllArticle() (articles []Article, err error) {
-	if err = DB.Find(&articles).Error; err != nil {
+	if err = db.DB.Find(&articles).Error; err != nil {
 		log.Println("get all article failed, err : ", err)
 		return articles, err
 	}
@@ -61,7 +62,7 @@ func (ArticleDao) GetAricleListByPages(page, pageSize int) ([]Article, error) {
 	// 计算跳过的记录数，基于当前页码和页面大小
 	offset := (page - 1) * pageSize
 	// 使用 Limit 和 Offset 方法实现分页
-	if err := DB.Order("created_at desc").Limit(pageSize).Offset(offset).Find(&articles).Error; err != nil {
+	if err := db.DB.Order("created_at desc").Limit(pageSize).Offset(offset).Find(&articles).Error; err != nil {
 		log.Printf("find articles failed, err: %v", err)
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (ArticleDao) GetAricleListByPages(page, pageSize int) ([]Article, error) {
 }
 
 func (ArticleDao) UpdateAnArticle(article *Article) (err error) {
-	if err = DB.Model(article).Updates(article).Error; err != nil {
+	if err = db.DB.Model(article).Updates(article).Error; err != nil {
 		log.Println("update an article failed, err: ", err)
 		return err
 	}
@@ -77,7 +78,7 @@ func (ArticleDao) UpdateAnArticle(article *Article) (err error) {
 }
 
 func (ArticleDao) DeleteAnArticle(id int) (err error) {
-	if err = DB.Where("article_id = ?", id).Delete(&Article{}).Error; err != nil {
+	if err = db.DB.Where("article_id = ?", id).Delete(&Article{}).Error; err != nil {
 		log.Println("delete an article failed, err: ", err)
 		return err
 	}

@@ -1,14 +1,15 @@
 package main
 
 import (
-	"our_blog/repository"
+	"log"
+	"our_blog/db"
 	"our_blog/route"
 )
 
 func main() {
 
 	if err := InitDB(); err != nil {
-		panic(err)
+		log.Println("init db failed, err:", err)
 	}
 
 	r := route.SetUpRouter()
@@ -17,7 +18,10 @@ func main() {
 }
 
 func InitDB() (err error) {
-	if err = repository.InitMysql(); err != nil {
+	if err = db.InitMysql(); err != nil {
+		return err
+	}
+	if err = db.InitRedis(); err != nil {
 		return err
 	}
 	return nil
