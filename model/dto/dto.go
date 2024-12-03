@@ -9,12 +9,11 @@ type UserRegisterRequest struct {
 }
 
 type UserRegisterResponse struct {
-	UserId       int64     `json:"userId"`
-	Username     string    `json:"username"`
-	Email        string    `json:"email"`
-	CreateTime   time.Time `json:"create_Time"`
-	AccessToken  string    `json:"access_token"`
-	RefreshToken string    `json:"refresh_token"`
+	UserId      int64     `json:"userId"`
+	Username    string    `json:"username"`
+	Email       string    `json:"email"`
+	CreateTime  time.Time `json:"create_Time"`
+	AccessToken string    `json:"access_token"`
 }
 
 type UserLoginRequest struct {

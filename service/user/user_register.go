@@ -2,8 +2,9 @@ package user
 
 import (
 	"errors"
-	"our_blog/dto"
-	"our_blog/repository"
+	"our_blog/commen/utils"
+	"our_blog/model/dao"
+	"our_blog/model/dto"
 	"time"
 )
 
@@ -40,33 +41,37 @@ func (f *UserRegisterFlow) Do() (*dto.UserRegisterResponse, error) {
 	if err := f.register(); err != nil {
 		return nil, err
 	}
+	accesstoken, err := utils.CreateUserToken(f.userid)
+	if err != nil {
+		return nil, err
+	}
 	return &dto.UserRegisterResponse{
-		UserId:     f.userid,
-		Username:   f.username,
-		Email:      f.email,
-		CreateTime: f.create_time,
-		//"token": "eyJhbGciOiJIUzI1NiIsInR..."
+		UserId:      f.userid,
+		Username:    f.username,
+		Email:       f.email,
+		CreateTime:  f.create_time,
+		AccessToken: accesstoken,
 	}, nil
 }
 
 func (f *UserRegisterFlow) checkData() error {
-	if _, err := repository.NewUserDaoInstance().GetUserByUsername(f.username); err == nil {
+	if _, err := dao.NewUserDaoInstance().GetUserByUsername(f.username); err == nil {
 		return UsernameExistErr
 	}
-	if _, err := repository.NewUserDaoInstance().GetUserByEmail(f.email); err == nil {
+	if _, err := dao.NewUserDaoInstance().GetUserByEmail(f.email); err == nil {
 		return EmailExistErr
 	}
 	return nil
 }
 
 func (f *UserRegisterFlow) register() error {
-	user := &repository.User{
+	user := &dao.User{
 		Username:   f.username,
 		Password:   f.password,
 		Email:      f.email,
 		CreateTime: f.create_time,
 	}
-	if err := repository.NewUserDaoInstance().CreateUser(user); err != nil {
+	if err := dao.NewUserDaoInstance().CreateUser(user); err != nil {
 		return err
 	}
 	f.userid = user.UserId

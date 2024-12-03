@@ -3,11 +3,14 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 	"our_blog/handler"
+	"our_blog/middleware"
 )
 
 func SetUpRouter() *gin.Engine {
 
 	r := gin.Default()
+
+	r.Use(middleware.Auth())
 
 	userGroup := r.Group("/user")
 	{
@@ -18,6 +21,12 @@ func SetUpRouter() *gin.Engine {
 		userGroup.POST("/login", handler.UserLoginHandler)
 
 	}
+
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"msg": "sucess",
+		})
+	})
 
 	return r
 

@@ -14,6 +14,7 @@ type claims struct {
 	jwt.RegisteredClaims
 }
 
+var TokenStatusErr = errors.New("token格式有误")
 var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 var SignMethod *jwt.SigningMethodHMAC = jwt.SigningMethodHS256
 
@@ -37,7 +38,7 @@ func CreateAccessToken(userid int64) (string, error) {
 	Myclaims := claims{
 		UserId: userid,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Second * 30)),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
@@ -45,7 +46,7 @@ func CreateAccessToken(userid int64) (string, error) {
 	token := jwt.NewWithClaims(SignMethod, Myclaims)
 	sign, err := token.SignedString(jwtSecret)
 	if err != nil {
-		log.Println("create access token failed, err:", err)
+		log.Println("func createaccesstoken - create access token failed, err:", err)
 	}
 	return sign, err
 }
@@ -62,40 +63,41 @@ func CreateRefreshToken(userid int64) (string, error) {
 	token := jwt.NewWithClaims(SignMethod, Myclaims)
 	sign, err := token.SignedString(jwtSecret)
 	if err != nil {
-		log.Println("create refresh token failed, err:", err)
+		log.Println("func createrefreshtoken - create refresh token failed, err:", err)
 	}
 	return sign, err
 }
 
 func GetUserIdFromToken(tokenString string) (int64, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &claims{}, func(token *jwt.Token) (interface{}, error) {
+	token, _ := jwt.ParseWithClaims(tokenString, &claims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecret, nil
 	})
-	if err != nil {
-		log.Println("parse token failed, err:", err)
+	//由于token过期也会返回相应错误，所以不处理错误
+	/*if err != nil {
+		log.Println("func getuseridfromtoken-parse token failed, err:", err)
 		return -1, err
-	}
+	}*/
 	if claims, ok := token.Claims.(*claims); ok && token.Valid {
 		return claims.UserId, nil
 	}
-	return -1, errors.New("invalid token")
+	return -1, errors.New("func getuseridfromtoke - invalid token")
 }
 
 func ValidToken(tokenString string) (bool, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &claims{}, func(token *jwt.Token) (interface{}, error) {
+	token, _ := jwt.ParseWithClaims(tokenString, &claims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecret, nil
 	})
-	if err != nil {
-		log.Println("parse token failed, err:", err)
-		return false, err
+	if token == nil {
+		log.Println("func validtoken - parse token failed, err:", errors.New("token格式有误"))
+		return false, TokenStatusErr
 	}
-	if claims, ok := token.Claims.(jwt.RegisteredClaims); ok && token.Valid {
+	if claims, ok := token.Claims.(*claims); ok && token.Valid {
 		if claims.ExpiresAt.Time.Before(time.Now()) {
 			log.Println("token is expired")
 			return true, nil
 		}
 		return false, nil
 	}
-	log.Println("invalid token")
+	log.Println("func validtoken - invalid token")
 	return true, nil
 }
