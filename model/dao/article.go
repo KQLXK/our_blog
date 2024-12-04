@@ -8,16 +8,20 @@ import (
 )
 
 type Article struct {
-	Title      string    `gorm:"column:title" json:"title"`             // 文章标题
-	ArticleId  uint      `gorm:"column:article_id" json:"article_id"`   // 文章 ID
-	AuthorId   uint      `gorm:"column:author_id" json:"author_id"`     // 作者 ID
-	Excerpt    string    `gorm:"column:excerpt" json:"excerpt"`         // 文章摘要
-	Category   string    `gorm:"column:category" json:"category"`       // 文章分类
-	Content    string    `gorm:"column:content" json:"content"`         // 文章内容
-	Status     string    `gorm:"column:status" json:"status"`           // 文章状态
-	CreateTime time.Time `gorm:"column:create_time" json:"create_time"` // 创建时间
-	UpdateTime time.Time `gorm:"column:update_time" json:"update_time"` // 更新时间
+	Title      string    `gorm:"column:title"`       // 文章标题
+	ArticleId  int64     `gorm:"column:article_id"`  // 文章 ID
+	UserId     int64     `gorm:"column:user_id"`     // 作者 ID
+	Excerpt    string    `gorm:"column:excerpt"`     // 文章摘要
+	Category   string    `gorm:"column:category" `   // 文章分类
+	Content    string    `gorm:"column:content"`     // 文章内容
+	Status     string    `gorm:"column:status"`      // 文章状态
+	CreateTime time.Time `gorm:"column:create_time"` // 创建时间
+	UpdateTime time.Time `gorm:"column:update_time"` // 更新时间
 	// Tags     []Tag   `gorm:"many2many:article_tags;" json:"tags"` // 假设有一个标签表，并与文章是多对多关系
+}
+
+func (Article) Tablename() string {
+	return "article"
 }
 
 type ArticleDao struct {
@@ -38,6 +42,7 @@ func (ArticleDao) CreateAnArticle(article *Article) (err error) {
 		log.Println("create an artilce failed, err : ", err)
 		return err
 	}
+	log.Println("create article sucess")
 	return nil
 }
 
@@ -46,6 +51,7 @@ func (ArticleDao) GetArticleById(articleId uint) (article Article, err error) {
 		log.Println("get an article by id failed, err : ", err)
 		return article, err
 	}
+	log.Println("get article by id sucess")
 	return article, nil
 }
 
@@ -54,6 +60,7 @@ func (ArticleDao) GetAllArticle() (articles []Article, err error) {
 		log.Println("get all article failed, err : ", err)
 		return articles, err
 	}
+	log.Println("get all article sucess")
 	return articles, nil
 }
 
@@ -66,6 +73,7 @@ func (ArticleDao) GetAricleListByPages(page, pageSize int) ([]Article, error) {
 		log.Printf("find articles failed, err: %v", err)
 		return nil, err
 	}
+	log.Println("get article bu pages sucess")
 	return articles, nil
 }
 
@@ -74,6 +82,7 @@ func (ArticleDao) UpdateAnArticle(article *Article) (err error) {
 		log.Println("update an article failed, err: ", err)
 		return err
 	}
+	log.Println("update article sucess")
 	return nil
 }
 
@@ -82,5 +91,6 @@ func (ArticleDao) DeleteAnArticle(id int) (err error) {
 		log.Println("delete an article failed, err: ", err)
 		return err
 	}
+	log.Println("delete article sucess")
 	return nil
 }

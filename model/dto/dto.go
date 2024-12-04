@@ -28,3 +28,18 @@ type UserLoginResponse struct {
 	CreateTime  time.Time `json:"create_Time"`
 	AccessToken string    `json:"access_token"`
 }
+
+type ArticlePublishReq struct {
+	Title    string `json:"title"`    // 文章标题
+	Username string `json:"username"` // 文章作者
+	Excerpt  string `json:"excerpt"`  // 文章摘要
+	Category string `json:"category"` // 文章分类
+	Content  string `json:"content"`  // 文章内容
+	Status   string `json:"status"`   // 文章状态
+}
+
+type ArticlePublishResp struct {
+	ArticleId int64     `json:"article_id"`
+	Title     string    `json:"title"`
+	CreateAt  time.Time `json:"create_at"`
+}

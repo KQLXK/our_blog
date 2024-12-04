@@ -22,6 +22,13 @@ func SetUpRouter() *gin.Engine {
 
 	}
 
+	ArticleGroup := r.Group("/article")
+	{
+		//发表文章
+		ArticleGroup.POST("/publish", handler.ArticlePublishHandler)
+
+	}
+
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"msg": "sucess",
