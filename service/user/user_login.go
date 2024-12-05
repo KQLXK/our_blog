@@ -19,6 +19,10 @@ var (
 	PasswordWrongErr    = errors.New("password wrong")
 )
 
+func UserLogin(ul dto.UserLoginRequest) (*dto.UserLoginResponse, error) {
+	return NewUserLoginFlow(ul).Do()
+}
+
 func NewUserLoginFlow(ul dto.UserLoginRequest) *UserLoginFlow {
 	return &UserLoginFlow{
 		username: ul.Username,

@@ -45,7 +45,7 @@ func (s *Status) message() string {
 func newstatus(httpcode int, statuscode int, message string) Status {
 	return Status{
 		HTTPcode:   httpcode,
-		StatusCode: httpcode,
+		StatusCode: statuscode,
 		Message:    message,
 	}
 }
@@ -72,11 +72,13 @@ func (r R) ToMap(s interface{}) {
 	}
 }
 
-func Sucess(c *gin.Context, r R) {
+func Sucess(c *gin.Context, data interface{}) {
 	h := gin.H{
 		"status":  0,
 		"message": "sucess",
 	}
+	r := make(R)
+	r.ToMap(data)
 	h["data"] = r
 	c.JSON(http.StatusOK, h)
 }

@@ -26,6 +26,11 @@ func SetUpRouter() *gin.Engine {
 	{
 		//发表文章
 		ArticleGroup.POST("/publish", handler.ArticlePublishHandler)
+		//更新文章
+		ArticleGroup.POST("/update", handler.ArticleUpdateHandler)
+		//获取文章-按页
+		//获取文章-按文章id
+		//删除文章
 
 	}
 

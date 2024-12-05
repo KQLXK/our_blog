@@ -27,9 +27,7 @@ func UserRegisterHandler(c *gin.Context) {
 			result.Error(c, result.RegisterErrStatus)
 		}
 	} else {
-		r := make(result.R)
-		r.ToMap(data)
-		result.Sucess(c, r)
+		result.Sucess(c, data)
 	}
 
 }
@@ -42,7 +40,7 @@ func UserLoginHandler(c *gin.Context) {
 		result.Error(c, result.GetReqErrStatus)
 	}
 
-	data, err := user.NewUserLoginFlow(u).Do()
+	data, err := user.UserLogin(u)
 	if err != nil {
 		if err == user.UsernameNotExistErr {
 			result.Error(c, result.UsernameNotExsitsErrStatus)
@@ -52,8 +50,6 @@ func UserLoginHandler(c *gin.Context) {
 			result.Error(c, result.ServerErrStatus)
 		}
 	} else {
-		r := make(result.R)
-		r.ToMap(data)
-		result.Sucess(c, r)
+		result.Sucess(c, data)
 	}
 }
