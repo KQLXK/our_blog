@@ -21,8 +21,8 @@ func Auth() gin.HandlerFunc {
 		log.Println("acctoken: ", accesstoken)
 		//若没有token，则为游客状态
 		if accesstoken == "" {
-			c.Set("userid", "")
-			c.Next()
+			result.Error(c, result.UnauthorizedStatus)
+			c.Abort()
 			return
 		}
 

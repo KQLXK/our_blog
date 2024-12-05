@@ -38,7 +38,7 @@ func CreateAccessToken(userid int64) (string, error) {
 	Myclaims := claims{
 		UserId: userid,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Second * 30)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour)),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
