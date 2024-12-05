@@ -43,3 +43,18 @@ type ArticlePublishResp struct {
 	Title     string    `json:"title"`
 	CreateAt  time.Time `json:"create_at"`
 }
+
+type ArticleUpdateReq struct {
+	ArticleId int64  `json:"article_id"`
+	Title     string `json:"title"`    // 文章标题
+	Excerpt   string `json:"excerpt"`  // 文章摘要
+	Category  string `json:"category"` // 文章分类
+	Content   string `json:"content"`  // 文章内容
+	Status    string `json:"status"`   // 文章状态
+}
+
+type ArticleUpdateResp struct {
+	ArticleId int64     `json:"article_id"`
+	Title     string    `json:"title"`
+	UpdateAt  time.Time `json:"Update_at"`
+}

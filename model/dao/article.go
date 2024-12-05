@@ -46,9 +46,9 @@ func (ArticleDao) CreateAnArticle(article *Article) (err error) {
 	return nil
 }
 
-func (ArticleDao) GetArticleById(articleId uint) (article Article, err error) {
-	if err = db.DB.Where("article_id =?", articleId).First(&article).Error; err != nil {
-		log.Println("get an article by id failed, err : ", err)
+func (ArticleDao) GetArticleById(articleId int64) (article Article, err error) {
+	if err = db.DB.Where("article_id = ?", articleId).First(&article).Error; err != nil {
+		log.Println("get an article by id failed, err:", err)
 		return article, err
 	}
 	log.Println("get article by id sucess")
@@ -78,8 +78,8 @@ func (ArticleDao) GetAricleListByPages(page, pageSize int) ([]Article, error) {
 }
 
 func (ArticleDao) UpdateAnArticle(article *Article) (err error) {
-	if err = db.DB.Model(article).Updates(article).Error; err != nil {
-		log.Println("update an article failed, err: ", err)
+	if err = db.DB.Model(article).Where("article_id = ?", article.ArticleId).Updates(article).Error; err != nil {
+		log.Println("update an article failed, err:", err)
 		return err
 	}
 	log.Println("update article sucess")
