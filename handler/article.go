@@ -6,6 +6,7 @@ import (
 	"our_blog/commen/result"
 	"our_blog/model/dto"
 	"our_blog/service/article"
+	"strconv"
 )
 
 func ArticlePublishHandler(c *gin.Context) {
@@ -34,6 +35,7 @@ func ArticlePublishHandler(c *gin.Context) {
 		return
 	}
 	result.Sucess(c, data)
+	return
 }
 
 func ArticleUpdateHandler(c *gin.Context) {
@@ -68,4 +70,32 @@ func ArticleUpdateHandler(c *gin.Context) {
 		}
 	}
 	result.Sucess(c, data)
+	return
+}
+
+func ArtQueryByIdHandler(c *gin.Context) {
+	ArticleId := c.Param("articleid")
+	if ArticleId == "" {
+		log.Println("get article_id failed")
+		result.Error(c, result.GetReqErrStatus)
+		return
+	}
+	articleid, err := strconv.ParseInt(ArticleId, 10, 64)
+	log.Println("articleid:", ArticleId)
+	if err != nil {
+		result.Error(c, result.ServerErrStatus)
+		return
+	}
+	data, err := article.ArtQueryById(articleid)
+	if err != nil {
+		if err == article.ArticleNotFoundErr {
+			result.Error(c, result.ArticleNotFoundErr)
+			return
+		} else {
+			result.Error(c, result.ServerErrStatus)
+			return
+		}
+	}
+	result.Sucess(c, data)
+	return
 }

@@ -20,6 +20,9 @@ var (
 	UnauthorizedStatus = newstatus(http.StatusUnauthorized, 40101, "请先进行登录")
 	TokenExiredStatus  = newstatus(http.StatusUnauthorized, 40102, "token过期，请重新登录")
 
+	//404无法找到资源
+	ArticleNotFoundErr = newstatus(http.StatusNotFound, 40401, "未找到相应文章")
+
 	//500服务器内部错误
 	ServerErrStatus = newstatus(http.StatusInternalServerError, 50000, "服务器内部错误")
 )

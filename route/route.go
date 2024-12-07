@@ -30,6 +30,7 @@ func SetUpRouter() *gin.Engine {
 		ArticleGroup.POST("/update", handler.ArticleUpdateHandler)
 		//获取文章-按页
 		//获取文章-按文章id
+		ArticleGroup.GET("/querybyid/:articleid", handler.ArtQueryByIdHandler)
 		//删除文章
 
 	}

@@ -46,10 +46,10 @@ func (ArticleDao) CreateAnArticle(article *Article) (err error) {
 	return nil
 }
 
-func (ArticleDao) GetArticleById(articleId int64) (article Article, err error) {
+func (ArticleDao) GetArticleById(articleId int64) (article *Article, err error) {
 	if err = db.DB.Where("article_id = ?", articleId).First(&article).Error; err != nil {
 		log.Println("get an article by id failed, err:", err)
-		return article, err
+		return nil, err
 	}
 	log.Println("get article by id sucess")
 	return article, nil

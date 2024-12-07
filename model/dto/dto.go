@@ -58,3 +58,15 @@ type ArticleUpdateResp struct {
 	Title     string    `json:"title"`
 	UpdateAt  time.Time `json:"Update_at"`
 }
+
+type ArtQueryByIdResp struct {
+	Title      string    `json:"title"`
+	ArticleId  int64     `json:"article_id"`
+	UserId     int64     `json:"user_id"`
+	Excerpt    string    `json:"excerpt"`
+	Category   string    `json:"category"`
+	Content    string    `json:"content"`
+	Status     string    `json:"status"`
+	CreateTime time.Time `json:"create_time"`
+	UpdateTime time.Time `json:"update_time"`
+}
