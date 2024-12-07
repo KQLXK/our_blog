@@ -3,11 +3,14 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 	"our_blog/handler"
+	"our_blog/middleware"
 )
 
 func SetUpRouter() *gin.Engine {
 
 	r := gin.Default()
+
+	r.Use(middleware.Auth())
 
 	userGroup := r.Group("/user")
 	{
@@ -18,6 +21,25 @@ func SetUpRouter() *gin.Engine {
 		userGroup.POST("/login", handler.UserLoginHandler)
 
 	}
+
+	ArticleGroup := r.Group("/article")
+	{
+		//发表文章
+		ArticleGroup.POST("/publish", handler.ArticlePublishHandler)
+		//更新文章
+		ArticleGroup.POST("/update", handler.ArticleUpdateHandler)
+		//获取文章-按页
+		//获取文章-按文章id
+		ArticleGroup.GET("/querybyid/:articleid", handler.ArtQueryByIdHandler)
+		//删除文章
+
+	}
+
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"msg": "sucess",
+		})
+	})
 
 	return r
 

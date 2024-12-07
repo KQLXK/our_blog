@@ -14,10 +14,14 @@ var (
 	GetReqErrStatus            = newstatus(http.StatusBadRequest, 40005, "无法获取请求参数")
 	UsernameNotExsitsErrStatus = newstatus(http.StatusBadRequest, 40006, "用户名不存在")
 	PasswordWrongErr           = newstatus(http.StatusBadRequest, 40007, "密码错误")
+	ArticlePubErrStatus        = newstatus(http.StatusBadRequest, 40008, "文章发布错误")
 
 	//401未被授权的
-	GetTokenErrStatus = newstatus(http.StatusUnauthorized, 40101, "请先进行登录")
-	TokenExiredStatus = newstatus(http.StatusUnauthorized, 40102, "token过期，请重新登录")
+	UnauthorizedStatus = newstatus(http.StatusUnauthorized, 40101, "请先进行登录")
+	TokenExiredStatus  = newstatus(http.StatusUnauthorized, 40102, "token过期，请重新登录")
+
+	//404无法找到资源
+	ArticleNotFoundErr = newstatus(http.StatusNotFound, 40401, "未找到相应文章")
 
 	//500服务器内部错误
 	ServerErrStatus = newstatus(http.StatusInternalServerError, 50000, "服务器内部错误")
@@ -44,7 +48,7 @@ func (s *Status) message() string {
 func newstatus(httpcode int, statuscode int, message string) Status {
 	return Status{
 		HTTPcode:   httpcode,
-		StatusCode: httpcode,
+		StatusCode: statuscode,
 		Message:    message,
 	}
 }
@@ -71,11 +75,13 @@ func (r R) ToMap(s interface{}) {
 	}
 }
 
-func Sucess(c *gin.Context, r R) {
+func Sucess(c *gin.Context, data interface{}) {
 	h := gin.H{
 		"status":  0,
 		"message": "sucess",
 	}
+	r := make(R)
+	r.ToMap(data)
 	h["data"] = r
 	c.JSON(http.StatusOK, h)
 }

@@ -50,6 +50,7 @@ func (r *RedisDao) GetKey(key string) (string, error) {
 		log.Println("redis get key failed, err:", err)
 		return "", err
 	}
+	log.Println("get key sucess")
 	return val, nil
 }
 
@@ -59,5 +60,6 @@ func (r *RedisDao) DelKey(key string) error {
 		log.Println("redis Del key failed, err:", err)
 		return err
 	}
+	log.Println("del key sucess")
 	return nil
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"our_blog/db"
+	"our_blog/model/dao"
 	"our_blog/route"
 )
 
@@ -22,6 +23,9 @@ func InitDB() (err error) {
 		return err
 	}
 	if err = db.InitRedis(); err != nil {
+		return err
+	}
+	if err = dao.InitTables(); err != nil {
 		return err
 	}
 	return nil
