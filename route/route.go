@@ -16,7 +16,6 @@ func SetUpRouter() *gin.Engine {
 	{
 		//用户注册
 		userGroup.POST("/register", handler.UserRegisterHandler)
-
 		//用户登录
 		userGroup.POST("/login", handler.UserLoginHandler)
 
@@ -27,12 +26,13 @@ func SetUpRouter() *gin.Engine {
 		//发表文章
 		ArticleGroup.POST("/publish", handler.ArticlePublishHandler)
 		//更新文章
-		ArticleGroup.POST("/update", handler.ArticleUpdateHandler)
+		ArticleGroup.PUT("/update", handler.ArticleUpdateHandler)
 		//获取文章-按页
+		ArticleGroup.GET("/querybypage", handler.ArtQueryByPageHandler)
 		//获取文章-按文章id
 		ArticleGroup.GET("/querybyid/:articleid", handler.ArtQueryByIdHandler)
 		//删除文章
-
+		ArticleGroup.DELETE("/delete", handler.DeleteArticleHandler)
 	}
 
 	r.GET("/ping", func(c *gin.Context) {
