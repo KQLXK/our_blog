@@ -21,13 +21,17 @@ func UserRegisterHandler(c *gin.Context) {
 	if err != nil {
 		if err == user.UsernameExistErr {
 			result.Error(c, result.UsernameExistErrStatus)
+			return
 		} else if err == user.EmailExistErr {
 			result.Error(c, result.EmailExistErrStatus)
+			return
 		} else {
 			result.Error(c, result.RegisterErrStatus)
+			return
 		}
 	} else {
 		result.Sucess(c, data)
+		return
 	}
 
 }
@@ -38,6 +42,7 @@ func UserLoginHandler(c *gin.Context) {
 	if err != nil {
 		log.Println("get userinfo failed, err: ", err)
 		result.Error(c, result.GetReqErrStatus)
+		return
 	}
 
 	data, err := user.UserLogin(u)
@@ -45,11 +50,12 @@ func UserLoginHandler(c *gin.Context) {
 		if err == user.UsernameNotExistErr {
 			result.Error(c, result.UsernameNotExsitsErrStatus)
 		} else if err == user.PasswordWrongErr {
-			result.Error(c, result.PasswordWrongErr)
+			result.Error(c, result.PasswordWrongErrStatus)
 		} else {
 			result.Error(c, result.ServerErrStatus)
 		}
 	} else {
 		result.Sucess(c, data)
+		return
 	}
 }

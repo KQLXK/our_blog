@@ -9,10 +9,10 @@ type UserRegisterRequest struct {
 }
 
 type UserRegisterResponse struct {
-	UserId      int64     `json:"userId"`
+	UserId      int64     `json:"userid"`
 	Username    string    `json:"username"`
 	Email       string    `json:"email"`
-	CreateTime  time.Time `json:"create_Time"`
+	CreateTime  time.Time `json:"create_time"`
 	AccessToken string    `json:"access_token"`
 }
 
@@ -22,10 +22,10 @@ type UserLoginRequest struct {
 }
 
 type UserLoginResponse struct {
-	UserId      int64     `json:"userId"`
+	UserId      int64     `json:"userid"`
 	Username    string    `json:"username"`
 	Email       string    `json:"email"`
-	CreateTime  time.Time `json:"create_Time"`
+	CreateTime  time.Time `json:"create_time"`
 	AccessToken string    `json:"access_token"`
 }
 
@@ -56,7 +56,7 @@ type ArticleUpdateReq struct {
 type ArticleUpdateResp struct {
 	ArticleId int64     `json:"article_id"`
 	Title     string    `json:"title"`
-	UpdateAt  time.Time `json:"Update_at"`
+	UpdateAt  time.Time `json:"update_at"`
 }
 
 type ArtQueryByIdResp struct {
