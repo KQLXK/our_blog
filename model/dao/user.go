@@ -71,7 +71,7 @@ func (UserDao) GetUserByEmail(email string) (user User, err error) {
 
 // 写一个重置密码的函数
 func (UserDao) UpdateUserPassword(userId int, password string) (err error) {
-	err = db.DB.Model(&User{}).Where("user_id =?", userId).Update("password", password).Error
+	err = db.DB.Model(&User{}).Where("user_id = ?", userId).Update("password", password).Error
 	if err != nil {
 		log.Println("update user password failed, err : ", err)
 		return err

@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	BadDataErr           = errors.New("参数不合法")
 	QueryUnauthorizedErr = errors.New("查询未被授权")
 	ArticleNotFoundErr   = errors.New("文章不存在")
 )
@@ -27,6 +28,9 @@ func NewArtQueryByIdFlow(ArticleId int64) *ArtQueryByIdFlow {
 }
 
 func (f *ArtQueryByIdFlow) Do() (*dto.ArtQueryByIdResp, error) {
+	if err := f.CheckData(); err != nil {
+		return nil, err
+	}
 	article, err := f.QueryById()
 	if err != nil {
 		return nil, err
@@ -55,6 +59,13 @@ func (f *ArtQueryByIdFlow) Do() (*dto.ArtQueryByIdResp, error) {
 //	}
 //	return nil
 //}
+
+func (f *ArtQueryByIdFlow) CheckData() error {
+	if f.ArticleId < 0 {
+		return BadDataErr
+	}
+	return nil
+}
 
 func (f *ArtQueryByIdFlow) QueryById() (*dao.Article, error) {
 	article, err := dao.NewArticleDaoInstance().GetArticleById(f.ArticleId)

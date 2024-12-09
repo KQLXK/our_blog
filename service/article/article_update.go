@@ -2,6 +2,7 @@ package article
 
 import (
 	"errors"
+	"gorm.io/gorm"
 	"our_blog/model/dao"
 	"our_blog/model/dto"
 	"time"
@@ -56,7 +57,9 @@ func (f *ArticleUpdateFlow) Do() (*dto.ArticleUpdateResp, error) {
 
 func (f *ArticleUpdateFlow) CheckUserId() error {
 	article, err := dao.NewArticleDaoInstance().GetArticleById(f.ArticleId)
-	if err != nil {
+	if err == gorm.ErrRecordNotFound {
+		return ArticleNotFoundErr
+	} else if err != nil {
 		return err
 	}
 	if article.UserId != f.UserId {
