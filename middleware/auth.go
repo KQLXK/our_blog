@@ -21,7 +21,7 @@ func Auth() gin.HandlerFunc {
 		log.Println("acctoken: ", accesstoken)
 		//若没有token，则为游客状态
 		if accesstoken == "" {
-			result.Error(c, result.UnauthorizedStatus)
+			result.Error(c, result.UnLoginStatus)
 			c.Abort()
 			return
 		}
@@ -42,14 +42,14 @@ func Auth() gin.HandlerFunc {
 		//acc token过期，寻找对应的ref token
 		if timeOut {
 			log.Println("acc token expired")
-			refershtoken, err := dao.NewTokenDao().GetKey(accesstoken)
+			refreshtoken, err := dao.NewTokenDao().GetKey(accesstoken)
 			if err != nil {
 				result.Error(c, result.ServerErrStatus)
 				c.Abort()
 				return
 			}
 
-			timeOut, err = utils.ValidToken(refershtoken)
+			timeOut, err = utils.ValidToken(refreshtoken)
 			if err != nil {
 				result.Error(c, result.ParseTokenErrStatus)
 				c.Abort()
@@ -77,7 +77,7 @@ func Auth() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			userid, err := utils.GetUserIdFromToken(refershtoken)
+			userid, err := utils.GetUserIdFromToken(refreshtoken)
 			if err != nil {
 				result.Error(c, result.ParseTokenErrStatus)
 				c.Abort()
@@ -90,8 +90,8 @@ func Auth() gin.HandlerFunc {
 				return
 			}
 
-			//更新acc token
-			err = dao.NewTokenDao().SetKey(accesstoken, refershtoken)
+			//更新acc token,并把userid放入上下文
+			err = dao.NewTokenDao().SetKey(accesstoken, refreshtoken)
 			if err != nil {
 				result.Error(c, result.ServerErrStatus)
 				c.Abort()

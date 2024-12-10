@@ -43,7 +43,7 @@ func (f *UserLoginFlow) Do() (*dto.UserLoginResponse, error) {
 		return nil, err
 	}
 
-	//创建token
+	//不是管理员，创建token
 	acctoken, err := utils.CreateUserToken(user.UserId)
 	if err != nil {
 		return nil, err
