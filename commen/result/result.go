@@ -18,8 +18,9 @@ var (
 	InvalidDataErrStatus       = newstatus(http.StatusBadRequest, 40009, "参数不合法")
 
 	//401未被授权的
-	UnauthorizedStatus = newstatus(http.StatusUnauthorized, 40101, "请先进行登录")
+	UnLoginStatus      = newstatus(http.StatusUnauthorized, 40101, "请先登录")
 	TokenExiredStatus  = newstatus(http.StatusUnauthorized, 40102, "token过期，请重新登录")
+	UnauthorizedStatus = newstatus(http.StatusUnauthorized, 40103, "未被授权的操作")
 
 	//404无法找到资源
 	ArticleNotFoundErrStatus = newstatus(http.StatusNotFound, 40401, "未找到相应文章")

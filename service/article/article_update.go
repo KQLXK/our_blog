@@ -56,6 +56,9 @@ func (f *ArticleUpdateFlow) Do() (*dto.ArticleUpdateResp, error) {
 }
 
 func (f *ArticleUpdateFlow) CheckUserId() error {
+	if isadmin, _ := dao.NewUserDaoInstance().IsAdmin(f.UserId); isadmin {
+		return nil
+	}
 	article, err := dao.NewArticleDaoInstance().GetArticleById(f.ArticleId)
 	if err == gorm.ErrRecordNotFound {
 		return ArticleNotFoundErr
