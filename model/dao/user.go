@@ -13,6 +13,7 @@ type User struct {
 	Password   string    `gorm:"column:password"`
 	Email      string    `gorm:"column:email"`
 	CreateTime time.Time `gorm:"column:create_time"`
+	IsAdmin    bool      `gorm:"column:is_admin;default:false"`
 }
 
 func (User) TableName() string {
@@ -51,7 +52,7 @@ func (UserDao) GetUserByUsername(username string) (user User, err error) {
 	return user, nil
 }
 
-func (UserDao) GetUserById(userId int) (user User, err error) {
+func (UserDao) GetUserById(userId int64) (user User, err error) {
 	err = db.DB.Where("user_id =?", userId).First(&user).Error
 	if err != nil {
 		log.Println("get user by id failed, err : ", err)
@@ -77,4 +78,12 @@ func (UserDao) UpdateUserPassword(userId int, password string) (err error) {
 		return err
 	}
 	return nil
+}
+
+func (UserDao) IsAdmin(UserID int64) (bool, error) {
+	user, err := NewUserDaoInstance().GetUserById(UserID)
+	if err != nil {
+		return false, err
+	}
+	return user.IsAdmin, nil
 }

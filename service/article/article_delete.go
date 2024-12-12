@@ -37,11 +37,16 @@ func (f *ArticleDeleteFlow) Do() error {
 }
 
 func (f *ArticleDeleteFlow) CheckData() error {
+	//检查文章是否存在
 	article, err := dao.NewArticleDaoInstance().GetArticleById(f.ArticleId)
 	if err == gorm.ErrRecordNotFound {
 		return ArticleNotFoundErr
 	} else if err != nil {
 		return err
+	}
+	//如果是管理员，不用验证userid
+	if isadmin, _ := dao.NewUserDaoInstance().IsAdmin(f.UserId); isadmin {
+		return nil
 	}
 	if article.UserId != f.UserId {
 		return DeleteUnauthorizedErr
