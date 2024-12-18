@@ -16,6 +16,7 @@ var (
 	PasswordWrongErrStatus     = newstatus(http.StatusBadRequest, 40007, "密码错误")
 	ArticlePubErrStatus        = newstatus(http.StatusBadRequest, 40008, "文章发布错误")
 	InvalidDataErrStatus       = newstatus(http.StatusBadRequest, 40009, "参数不合法")
+	PasswordSameErrStatus      = newstatus(http.StatusBadRequest, 40010, "新密码与原密码相同")
 
 	//401未被授权的
 	UnLoginStatus      = newstatus(http.StatusUnauthorized, 40101, "请先登录")
@@ -80,7 +81,7 @@ func (r R) ToMap(s interface{}) {
 func Sucess(c *gin.Context, data interface{}) {
 	h := gin.H{
 		"status":  0,
-		"message": "sucess",
+		"message": "success",
 	}
 	//r := make(R)
 	//r.ToMap(data)

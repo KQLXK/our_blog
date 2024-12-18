@@ -16,7 +16,7 @@ var (
 )
 
 func InitMysql() (err error) {
-	dsn := "root:yuchao123@tcp(127.0.0.1:3306)/ourblog?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:admin@tcp(127.0.0.1:3306)/ourblog?charset=utf8mb4&parseTime=True&loc=Local"
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return err
@@ -26,7 +26,7 @@ func InitMysql() (err error) {
 
 func InitRedis() error {
 	Rdb = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "127.0.0.1:6379",
 		Password: "", // 密码
 		DB:       0,  // 数据库
 		PoolSize: 20, // 连接池大小

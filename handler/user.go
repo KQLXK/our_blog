@@ -59,3 +59,27 @@ func UserLoginHandler(c *gin.Context) {
 		return
 	}
 }
+
+func UserResetPasswordHandler(c *gin.Context) {
+	var req dto.UserResetPasswordRequest
+	err := c.ShouldBind(&req)
+	if err != nil {
+		log.Println("bind user reset password request failed,err", err)
+		result.Error(c, result.GetReqErrStatus)
+		return
+	}
+	err = user.UserResetPassword(req.Username, req.NewPassword)
+	if err != nil {
+		log.Println("user reset password failed, err:", err)
+		switch err {
+		case user.UsernameNotExistErr:
+			result.Error(c, result.UsernameNotExsitsErrStatus)
+		case user.PasswordSameErr:
+			result.Error(c, result.PasswordSameErrStatus) // 使用新定义的 PasswordSameErrStatus
+		default:
+			result.Error(c, result.ServerErrStatus)
+		}
+		return
+	}
+	result.Sucess(c, nil)
+}

@@ -29,6 +29,11 @@ type UserLoginResponse struct {
 	AccessToken string    `json:"access_token"`
 }
 
+type UserResetPasswordRequest struct {
+	Username    string `json:"username"`
+	NewPassword string `json:"new_password"`
+}
+
 type ArticlePublishReq struct {
 	Title    string `json:"title"`    // 文章标题
 	Username string `json:"username"` // 文章作者
