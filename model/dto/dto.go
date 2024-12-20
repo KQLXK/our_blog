@@ -1,6 +1,8 @@
 package dto
 
-import "time"
+import (
+	"time"
+)
 
 type UserRegisterRequest struct {
 	Username string `json:"username"`

@@ -37,6 +37,8 @@ func SetUpRouter() *gin.Engine {
 		ArticleGroup.GET("/querybyid/:articleid", handler.ArtQueryByIdHandler)
 		//删除文章
 		ArticleGroup.DELETE("/delete", handler.DeleteArticleHandler)
+		//点赞
+		ArticleGroup.POST("/:article_id/like", handler.ArticleLikeHandler)
 	}
 
 	r.GET("/ping", func(c *gin.Context) {
