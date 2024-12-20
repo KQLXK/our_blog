@@ -21,6 +21,8 @@ func SetUpRouter() *gin.Engine {
 
 		//重置密码
 		userGroup.POST("/reset", handler.UserResetPasswordHandler)
+		//使用id获取用户信息
+		userGroup.GET("/:id", handler.UserGetByIdHandler)
 	}
 
 	ArticleGroup := r.Group("/article")
