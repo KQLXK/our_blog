@@ -8,15 +8,15 @@ import (
 )
 
 type Article struct {
-	Title      string    `gorm:"column:title"`                               // 文章标题
-	ArticleId  int64     `gorm:"column:article_id;primaryKey;autoIncrement"` // 文章 ID
-	UserId     int64     `gorm:"column:user_id"`                             // 作者 ID
-	Excerpt    string    `gorm:"column:excerpt"`                             // 文章摘要
-	Category   string    `gorm:"column:category" `                           // 文章分类
-	Content    string    `gorm:"column:content"`                             // 文章内容
-	Status     string    `gorm:"column:status"`                              // 文章状态
-	CreateTime time.Time `gorm:"column:create_time"`                         // 创建时间
-	UpdateTime time.Time `gorm:"column:update_time"`                         // 更新时间
+	Title      string    `gorm:"column:title" json:"title"`                                    // 文章标题
+	ArticleId  int64     `gorm:"column:article_id;primaryKey;autoIncrement" json:"article_id"` // 文章 ID
+	UserId     int64     `gorm:"column:user_id" json:"user_id"`                                // 作者 ID
+	Excerpt    string    `gorm:"column:excerpt" json:"excerpt"`                                // 文章摘要
+	Category   string    `gorm:"column:category" json:"category"`                              // 文章分类
+	Content    string    `gorm:"column:content" json:"content"`                                // 文章内容
+	Status     string    `gorm:"column:status" json:"status"`                                  // 文章状态
+	CreateTime time.Time `gorm:"column:create_time" json:"create_time"`                        // 创建时间
+	UpdateTime time.Time `gorm:"column:update_time" json:"update_time"`                        // 更新时间
 	// Tags     []Tag   `gorm:"many2many:article_tags;" json:"tags"` // 假设有一个标签表，并与文章是多对多关系
 }
 

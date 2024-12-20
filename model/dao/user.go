@@ -8,12 +8,12 @@ import (
 )
 
 type User struct {
-	UserId     int64     `gorm:"column:user_id;primaryKey;autoIncrement"`
-	Username   string    `gorm:"column:username"`
-	Password   string    `gorm:"column:password"`
-	Email      string    `gorm:"column:email"`
-	CreateTime time.Time `gorm:"column:create_time"`
-	IsAdmin    bool      `gorm:"column:is_admin;default:false"`
+	UserId     int64     `gorm:"column:user_id;primaryKey;autoIncrement" json:"user_id"`
+	Username   string    `gorm:"column:username" json:"username"`
+	Password   string    `gorm:"column:password" json:"password"`
+	Email      string    `gorm:"column:email" json:"email"`
+	CreateTime time.Time `gorm:"column:create_time" json:"create_time"`
+	IsAdmin    bool      `gorm:"column:is_admin;default:false" json:"is_admin"`
 }
 
 func (User) TableName() string {
