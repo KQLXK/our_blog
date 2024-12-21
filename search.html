@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>Single Post</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+
+    <!-- Google Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|PT+Serif:400,400italic' rel='stylesheet'
+        type='text/css'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" id="theme-styles">
+
+    <!--[if lt IE 9]>      
+        <script src="js/vendor/google/html5-3.6-respond-1.1.0.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<body>
+    <header>
+        <div class="widewrapper masthead">
+            <div class="container">
+                <a href="index.html?page=1&pagesize=3" id="logo">
+                    <img src="img/logo.png" alt="clean Blog">
+                </a>
+
+                <div id="mobile-nav-toggle" class="pull-right">
+                    <a href="#" data-toggle="collapse" data-target=".clean-nav .navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+
+                <nav class="pull-right clean-nav">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav nav-pills navbar-nav">
+
+                            <li>
+                                <a href="index.html?page=1&pagesize=3">首页</a>
+                            </li>
+                            <li>
+                                <a href="about.html">关于</a>
+                            </li>
+                            <li>
+                                <a href="write.html">写作</a>
+                            </li>
+                            <li>
+                                <a href="reset.html">重置密码</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+
+        <div class="widewrapper subheader">
+            <div class="container">
+                <div class="clean-breadcrumb">
+                    <a href="#">博客</a>
+                    <!-- <span class="separator">&#x2F;</span>
+                    <a href="#">Bootstrap</a>
+                    <span class="separator">&#x2F;</span>
+                    <a href="#">HTML Template</a> -->
+                </div>
+
+
+                <div class="clean-searchbox">
+                    <form action="#">
+                        <input class="searchfield" id="searchbox" type="text" placeholder="搜索">
+                        <button class="searchbutton" type="button" id="btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="widewrapper main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 blog-main">
+                    <article class="blog-post" id="content">
+                        <!-- <header>
+
+                            <div class="lead-image">
+                                <img src="img/OIP-C.jpg" alt="奶龙" class="img-responsive">
+
+                            </div>
+                        </header> -->
+                        <!-- <div class="body">
+                            <h1>奶龙</h1>
+                            <div class="meta">
+                                <i class="fa fa-user"></i> 人物<i class="fa fa-calendar"></i>时间<i
+                                    class="fa fa-comments"></i><span class="data"><a href="#comments">评论数</a></span>
+                            </div>
+                            <p>奶龙是注册商标《奶龙》及其衍生作品中的主角。</p>
+
+                            <p>它是一只拥有“duangduang”大肚子的异星幼龙，呆萌可爱又带点小机灵的大吃货一枚。来到地球遇到了活泼搞笑、富有正义感、酷爱发明的中国少年小七，一人一龙一拍即合，迅速成为好友并开启了搞笑冒险之旅。持续给观众和粉丝们带来快乐和勇气。
+                            </p>
+
+
+
+                        </div> -->
+                    </article>
+
+                    <div class="buttons clearfix col-md-4">
+                        <button type="button" class="btn btn-xlarge btn-clean-one" id="btn1">修改文章</button>
+                    </div>
+
+
+                    <div class="buttons clearfix col-md-4">
+                        <button type="button" class="btn btn-xlarge btn-clean-one" id="btn2">删除文章</button>
+                    </div>
+
+
+                    <div class="buttons clearfix col-md-4">
+                        <button type="button" class="btn btn-xlarge btn-clean-one" id="btn4">点赞</button>
+                    </div>
+                    <br>
+                    <br>
+
+                    <aside class="create-comment" id="create-comment">
+                        <hr>
+
+                        <h2><i class="fa fa-pencil"></i> 添加评论 </h2>
+
+                        <form action="#">
+
+
+                            <div>
+                                <input type="text" name="message" id="comment-body" placeholder="请输入评论"
+                                    class="form-control input-lg">
+                                <button type="button" class="btn btn-xlarge btn-clean-one" id="btn5">发送</button>
+                            </div>
+                        </form>
+                    </aside>
+
+
+
+                    <aside class="comments" id="comments-container">
+                        <hr>
+
+
+
+                    </aside>
+                </div>
+                <!-- <aside class="col-md-4 blog-aside">
+
+                    <div class="aside-widget">
+                        <header>
+                            <h3>Featured Post</h3>
+                        </header>
+                        <div class="body">
+                            <ul class="clean-list">
+                                <li><a href="">Clean - Responsive HTML5 Template</a></li>
+                                <li><a href="">Responsive Pricing Table</a></li>
+                                <li><a href="">Yellow HTML5 Template</a></li>
+                                <li><a href="">Blackor Responsive Theme</a></li>
+                                <li><a href="">Portfolio Bootstrap Template</a></li>
+                                <li><a href="">Clean Slider Template</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="aside-widget">
+                        <header>
+                            <h3>Related Post</h3>
+                        </header>
+                        <div class="body">
+                            <ul class="clean-list">
+                                <li><a href="">Blackor Responsive Theme</a></li>
+                                <li><a href="">Portfolio Bootstrap Template</a></li>
+                                <li><a href="">Clean Slider Template</a></li>
+                                <li><a href="">Clean - Responsive HTML5 Template</a></li>
+                                <li><a href="">Responsive Pricing Table</a></li>
+                                <li><a href="">Yellow HTML5 Template</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="aside-widget">
+                        <header>
+                            <h3>Tags</h3>
+                        </header>
+                        <div class="body clearfix">
+                            <ul class="tags">
+                                <li><a href="#">HTML5</a></li>
+                                <li><a href="#">CSS3</a></li>
+                                <li><a href="#">COMPONENTS</a></li>
+                                <li><a href="#">TEMPLATE</a></li>
+                                <li><a href="#">PLUGIN</a></li>
+                                <li><a href="#">BOOTSTRAP</a></li>
+                                <li><a href="#">TUTORIAL</a></li>
+                                <li><a href="#">UI/UX</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside> -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/modernizr.js"></script>
+
+
+
+
+    <script type="text/javascript">
+
+        // 获取 URL 中的 id 参数
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        var id = getQueryParam('id');
+        var Authorization = getQueryParam('Authorization');
+
+        var content = document.getElementById("content");
+        // 使用 AJAX 请求获取博客数据
+        $.get("http://127.0.0.1:8080/article/querybyid/{article_id}", { article_id: id, Authorization: Authorization }, function (data) {
+            console.log(data);
+            var arr = data.data;
+            var str = "";
+            str += `<article class="blog-post">
+                <div class="body">
+                            <h1>${arr.title}</h1>
+                            <div class="meta">
+                                <i class="fa fa-user"></i> ${arr.user_id}<i class="fa fa-calendar"></i>${arr.update_time}<i
+                                    class="fa fa-comments"></i><span class="data"><a href="#comments">评论数</a></span>
+                            </div>
+                            
+
+                            <p>分类：${arr.category}</p>
+
+                            <p>状态：${arr.status}</p>
+
+                            
+
+                            <p>${arr.content}</p>
+
+                            
+
+
+
+                        </div>
+                
+                
+                </article>`;
+            content.innerHTML = str;
+        }, "json");
+
+    </script>
+
+
+
+
+
+    <script type="text/javascript">
+
+
+
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        var Authorization = getQueryParam('Authorization');
+        console.log(Authorization);
+
+        // var nav = document.getElementById("nav");
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll('a[href]');
+            links.forEach(function (link) {
+                if (link.hostname === window.location.hostname) {
+                    const url = new URL(link.href);
+                    url.searchParams.set('Authorization', Authorization);
+                    link.href = url.toString();
+                }
+            });
+        });
+
+
+    </script>
+
+
+
+
+    <script type="text/javascript">
+
+        var btn = document.getElementById("btn");
+        var searchboxInput = document.getElementById("searchbox");
+
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        var Authorization = getQueryParam('Authorization');
+        console.log(Authorization);
+
+
+
+        btn.onclick = function () {
+            var searchbox = searchboxInput.value;
+
+
+            $.get("http://127.0.0.1:8080/article/querybyid/{article_id}", { article_id: searchbox, Authorization: Authorization }, function (data) {
+                console.log(data)
+
+
+                if (data.message == "success") {
+                    location.href = `search.html?id=${searchbox}&Authorization=${Authorization}`
+                }
+                else {
+                    alert(data.message)
+                }
+            }, "json")
+
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        var btn1 = document.getElementById("btn1");
+
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        var id = getQueryParam('id');
+        var Authorization = getQueryParam('Authorization');
+        console.log(id);
+        console.log(Authorization);
+
+        btn1.onclick = function () {
+            location.href = `rewrite.html?id=${id}&Authorization=${Authorization}`
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        var btn2 = document.getElementById("btn2");
+
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        var id = getQueryParam('id');
+        var Authorization = getQueryParam('Authorization');
+        console.log(id);
+        console.log(Authorization);
+
+
+
+        btn2.onclick = function () {
+
+            $.ajax({
+                url: 'http://127.0.0.1:8080/article/delete',
+                type: 'DELETE',
+
+                data: {
+                    article_id: id,
+                    Authorization: Authorization
+                },
+
+                complete: function (data) {
+                    if (data.message == "success") {
+                        alert("删除成功");
+                        location.href = `index.html?page=1&pagesize=3&Authorization=${Authorization}`
+                    }
+                    else {
+                        alert(data.message);
+                    }
+
+                }
+            }, "json");
+
+        }
+
+    </script>
+
+
+    <script>
+        var btn4 = document.getElementById("btn4");
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        var id = getQueryParam('id');
+        var Authorization = getQueryParam('Authorization');
+        console.log(id);
+        console.log(Authorization);
+
+
+        btn4.onclick = function () {
+            $.post("http://127.0.0.1:8080/article/{article_id}/like", { article_id: id, Authorization: Authorization }, function (data) {
+                console.log(data)
+
+
+                if (data.message == "success") {
+                    alert("点赞成功");
+                }
+                else {
+                    alert(data.message)
+                }
+            }, "json")
+
+
+        }
+    </script>
+
+
+
+
+    <script>
+
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        var Authorization = getQueryParam('Authorization');
+        var article_id = getQueryParam("id");
+
+        // 发送AJAX请求获取评论数据
+        $.get("http://127.0.0.1:8080/comment/list/{article_id}",
+            { article_id: article_id, Authorization: Authorization },
+            function (data) {
+                console.log(data); // 调试输出
+                renderComments(data);
+            },
+            "json"
+        ).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("请求失败:", textStatus, errorThrown);
+            // 可以在这里添加错误处理逻辑，例如显示错误消息
+            $('#comments-container').html('<p>加载评论失败，请稍后重试。</p>');
+        });
+
+        // 递归渲染回复
+        function renderReplies(replies) {
+            var replyHTML = '';
+            replies.forEach(function (reply) {
+                replyHTML += `
+                    <div class="comment reply">
+                        <div class="meta">
+                            <h3><a href="#">${reply.UserId}:</a></h3>
+                            <span class="date">${reply.CreateTime}</span>
+                            <span class="separator">-</span>
+                            <button class="btn-reply" data-user-id="${reply.UserId}" data-comment-id="${reply.CommentId}">回复</button>
+                        </div>
+                        <div class="body">
+                            ${reply.Content}
+                        </div>
+                        ${renderReplies(reply.Replies)}
+                    </div>
+                `;
+            });
+            return replyHTML;
+        }
+
+        // 渲染主评论及其回复
+        function renderComments(data) {
+            var commentsContainer = $('#comments-container');
+            var comments = data.data.comment;
+
+            if (!comments) {
+                commentsContainer.html('<p>暂无评论</p>');
+                return;
+            }
+
+            var commentHTML = '';
+
+            // 渲染主评论
+            commentHTML += `
+                <div class="comment">
+                    <div class="meta">
+                        <h3><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;${comments.UserId}:</a></h3>
+                        <span class="date">&nbsp;&nbsp;&nbsp;&nbsp;${comments.CreateTime}</span>
+                        <span class="separator">-</span>
+                        <button class="btn-reply" data-user-id="${comments.UserId}" data-comment-id="${comments.CommentId}">回复</button>
+                    </div>
+                    <div class="body">
+                        ${comments.Content}
+                    </div>
+                    ${renderReplies(comments.Replies)}
+                </div>
+            `;
+
+            commentsContainer.html(commentHTML);
+
+            // 绑定回复按钮事件
+            $('.btn-reply').on('click', function () {
+                var userId = $(this).data('user-id');
+                var commentId = $(this).data('comment-id');
+                var parentId = $(this).data('parent-id');
+
+                // 检查是否已经存在回复表单
+                var replyForm = $(this).siblings('.reply-form');
+                if (replyForm.length > 0) {
+                    // 如果已经存在，移除回复表单
+                    replyForm.remove();
+                    $(this).show();
+                    return;
+                }
+
+                // 隐藏回复按钮
+                $(this).hide();
+
+                // 添加回复表单
+                var formHTML = `
+                <div class="reply-form">
+                    <input type="text" id="reply-input-${commentId}" placeholder="请输入回复内容" >
+                    <button class="btn-submit" data-comment-id="${commentId}" data-parent-id="${parentId}">提交</button>
+                    <button class="btn-cancel" data-comment-id="${commentId}">取消</button>
+                </div>
+            `;
+                $(this).after(formHTML);
+
+                // 绑定取消按钮事件
+                $('.btn-cancel').on('click', function () {
+                    var commentId = $(this).data('comment-id');
+                    $(this).closest('.reply-form').remove();
+                    $(`#comment-${commentId} .btn-reply`).show();
+
+                });
+
+                // 绑定提交按钮事件
+                $('.btn-submit').on('click', function () {
+                    var commentId = $(this).data('comment-id');
+                    var parentId = $(this).data('parent-id');
+                    var replyContent = $(`#reply-input-${commentId}`).val();
+                    console.log(commentId)
+
+                    if (!replyContent) {
+                        alert('回复内容不能为空');
+                        return;
+                    }
+
+                    // 发送AJAX POST请求提交回复
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/article/{article_id}/comment",
+                        type: "POST",
+                        data: JSON.stringify({
+                            article_id: article_id,
+                            parent_id: commentId,
+                            content: replyContent,
+                            Authorization: Authorization
+                        }),
+                        contentType: "application/json",
+                        success: function (response) {
+                            console.log("回复提交成功:", response);
+                            alert("回复提交成功");
+                            // 重新加载评论
+                            $.get("http://127.0.0.1:8080/comment/list/{article_id}",
+                                { article_id: article_id, Authorization: Authorization },
+                                function (data) {
+                                    renderComments(data);
+                                },
+                                "json"
+                            );
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("回复提交失败:", error);
+                            alert("回复提交失败");
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+
+
+    <script>
+        var btn5 = document.getElementById("btn5");
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        var Authorization = getQueryParam('Authorization');
+        var article_id = getQueryParam("id");
+
+        var comment_bodyInput = document.getElementById("comment-body");
+
+        btn5.onclick = function () {
+
+            var comment_body = comment_bodyInput.value;
+
+            $.post("http://127.0.0.1:8080/article/{article_id}/comment", { article_id: article_id, Authorization: Authorization, content: comment_body, parent_id: "null" }, function (data) {
+                console.log(data)
+
+
+                if (data.message == "success") {
+                    alert("发表成功")
+                }
+                else {
+                    alert(data.message)
+                }
+            }, "json")
+
+        }
+
+    </script>
+
+</body>
+
+</html>
