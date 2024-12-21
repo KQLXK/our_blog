@@ -11,7 +11,7 @@ import (
 // ArticleLikeHandler 处理文章点赞
 func ArticleLikeHandler(c *gin.Context) {
 	articleIDStr := c.Param("article_id")
-	userIDStr, _ := GetUserid(c) //户ID通过请求头传递
+	userIDStr, _ := GetUserid(c)
 
 	articleID, err := strconv.ParseInt(articleIDStr, 10, 64)
 	if err != nil {
