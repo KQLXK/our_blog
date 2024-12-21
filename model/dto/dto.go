@@ -1,6 +1,9 @@
 package dto
 
-import "time"
+import (
+	"our_blog/model/dao"
+	"time"
+)
 
 type UserRegisterRequest struct {
 	Username string `json:"username"`
@@ -69,4 +72,35 @@ type ArtQueryByIdResp struct {
 	Status     string    `json:"status"`
 	CreateTime time.Time `json:"create_time"`
 	UpdateTime time.Time `json:"update_time"`
+}
+
+type ArticleCommentReq struct {
+	ArticleId int64  `json:"article_id"`
+	Content   string `json:"content"`
+	ParentId  *int64 `json:"parent_id"`
+}
+
+type ArticleCommentResp struct {
+	CommentId  int64     `json:"comment_id"`
+	CreateTime time.Time `json:"create_time"`
+}
+
+type CommentGetResp struct {
+	CommentId  int64     `json:"comment_id"`
+	UserId     int64     `json:"user_id"`
+	ArticleId  int64     `json:"article_id"`
+	ParentId   *int64    `json:"parent_id"`
+	Content    string    `json:"content"`
+	CreateTime time.Time `json:"create_time"`
+}
+
+// CommentWithReplies 包含评论及其回复的结构
+type CommentWithReplies struct {
+	Comment *dao.Comment   `json:"comment"`
+	Replies []*dao.Comment `json:"replies"` // 每个评论的回复
+}
+
+// CommentListResp 返回评论列表的结构
+type CommentListResp struct {
+	Comments []*CommentWithReplies `json:"comments"` // 评论和其回复的数组
 }

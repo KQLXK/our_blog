@@ -33,6 +33,16 @@ func SetUpRouter() *gin.Engine {
 		ArticleGroup.GET("/querybyid/:articleid", handler.ArtQueryByIdHandler)
 		//删除文章
 		ArticleGroup.DELETE("/delete", handler.DeleteArticleHandler)
+		//文章评论
+		ArticleGroup.POST("/:article_id/comment", handler.ArticleCommentHandler)
+	}
+
+	CommentGroup := r.Group("/comment")
+	{
+		//按文章id获取comment
+		CommentGroup.GET("/list/:article_id", handler.CommentListHandler)
+		//查询评论
+		CommentGroup.GET("/query/:comment_id", handler.CommentQueryHandler)
 	}
 
 	r.GET("/ping", func(c *gin.Context) {
