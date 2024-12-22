@@ -80,6 +80,7 @@ func (UserDao) UpdateUserPassword(userId int, password string) (err error) {
 	return nil
 }
 
+
 func (UserDao) UpdateUser(user User) error {
 	err := db.DB.Save(user).Error
 	if err != nil {
@@ -98,6 +99,7 @@ func (UserDao) CheckPassword(username string, password string) (bool, error) {
 	}
 	return user.Password == password, nil
 }
+
 
 func (UserDao) IsAdmin(UserID int64) (bool, error) {
 	user, err := NewUserDaoInstance().GetUserById(UserID)
