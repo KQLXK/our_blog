@@ -26,7 +26,7 @@ func InitMysql() (err error) {
 
 func InitRedis() error {
 	Rdb = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "127.0.0.1:6379",
 		Password: "", // 密码
 		DB:       0,  // 数据库
 		PoolSize: 20, // 连接池大小

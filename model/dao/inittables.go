@@ -6,7 +6,7 @@ import (
 )
 
 func InitTables() error {
-	err := db.DB.AutoMigrate(&Article{}, &User{})
+	err := db.DB.AutoMigrate(&Article{}, &User{}, &Comment{})
 	if err != nil {
 		log.Println("InitTables failed, err:", err)
 		return err
