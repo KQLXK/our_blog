@@ -19,6 +19,10 @@ func SetUpRouter() *gin.Engine {
 		//用户登录
 		userGroup.POST("/login", handler.UserLoginHandler)
 
+		//重置密码
+		userGroup.POST("/reset", handler.UserResetPasswordHandler)
+		//使用id获取用户信息
+		userGroup.GET("/:id", handler.UserGetByIdHandler)
 	}
 
 	ArticleGroup := r.Group("/article")
@@ -33,6 +37,8 @@ func SetUpRouter() *gin.Engine {
 		ArticleGroup.GET("/querybyid/:articleid", handler.ArtQueryByIdHandler)
 		//删除文章
 		ArticleGroup.DELETE("/delete", handler.DeleteArticleHandler)
+		//点赞
+		ArticleGroup.POST("/:article_id/like", handler.ArticleLikeHandler)
 		//文章评论
 		ArticleGroup.POST("/:article_id/comment", handler.ArticleCommentHandler)
 	}
