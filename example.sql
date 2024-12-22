@@ -27,3 +27,14 @@ CREATE TABLE `user` (
     PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
 
+CREATE TABLE `likes` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `article_id` int(11) NOT NULL COMMENT '文章ID',
+    `user_id` int(11) NOT NULL COMMENT '用户ID',
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+    `deleted_at` timestamp NULL DEFAULT NULL COMMENT '软删除时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_article_id` (`article_id`),
+    KEY `idx_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章点赞表';

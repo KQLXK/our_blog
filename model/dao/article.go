@@ -12,7 +12,7 @@ type Article struct {
 	ArticleId  int64     `gorm:"column:article_id;primaryKey;autoIncrement"` // 文章 ID
 	UserId     int64     `gorm:"column:user_id"`                             // 作者 ID
 	Excerpt    string    `gorm:"column:excerpt"`                             // 文章摘要
-	Category   string    `gorm:"column:category" `                           // 文章分类
+	Category   string    `gorm:"column:category"`                            // 文章分类
 	Content    string    `gorm:"column:content"`                             // 文章内容
 	Status     string    `gorm:"column:status"`                              // 文章状态
 	CreateTime time.Time `gorm:"column:create_time"`                         // 创建时间
