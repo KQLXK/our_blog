@@ -94,13 +94,13 @@ type CommentGetResp struct {
 	CreateTime time.Time `json:"create_time"`
 }
 
-// CommentWithReplies 包含评论及其回复的结构
-type CommentWithReplies struct {
-	Comment *dao.Comment   `json:"comment"`
-	Replies []*dao.Comment `json:"replies"` // 每个评论的回复
-}
+//// CommentWithReplies 包含评论及其回复的结构
+//type CommentWithReplies struct {
+//	Comment *dao.Comment   `json:"comment"`
+//	Replies []*dao.Comment `json:"replies"` // 每个评论的回复
+//}
 
 // CommentListResp 返回评论列表的结构
 type CommentListResp struct {
-	Comments []*CommentWithReplies `json:"comments"` // 评论和其回复的数组
+	Comments []*dao.Comment `json:"comment"`
 }

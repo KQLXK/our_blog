@@ -8,7 +8,7 @@ import (
 // CommentListFlow 处理获取文章评论及回复的逻辑
 type CommentListFlow struct {
 	ArticleId int64
-	Comments  []dto.CommentWithReplies // 包含评论和回复的结构
+	//Comments  []dto.CommentWithReplies // 包含评论和回复的结构
 }
 
 // CommentList 根据文章 ID 获取该文章的所有评论及其回复
@@ -36,20 +36,17 @@ func (f *CommentListFlow) Do() (*dto.CommentListResp, error) {
 }
 
 // GetCommentsAndReplies 从数据库中获取文章的所有评论及其回复
-func (f *CommentListFlow) GetCommentsAndReplies() ([]*dto.CommentWithReplies, error) {
+func (f *CommentListFlow) GetCommentsAndReplies() ([]*dao.Comment, error) {
 	RootCommentList, err := dao.NewCommentDaoInstance().GetRootCommentsByArticle(f.ArticleId)
 	if err != nil {
 		return nil, err
 	}
-	var CommentsList []*dto.CommentWithReplies
+	var CommentsList []*dao.Comment
 	for _, Comment := range RootCommentList {
 		if err = dao.NewCommentDaoInstance().RecursiveGetReplies(Comment); err != nil {
 			return nil, err
 		}
-		CommentsList = append(CommentsList, &dto.CommentWithReplies{
-			Comment: Comment,
-			Replies: Comment.Replies,
-		})
+		CommentsList = append(CommentsList, Comment)
 	}
 	return CommentsList, nil
 }

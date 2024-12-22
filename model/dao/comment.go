@@ -68,7 +68,7 @@ func (CommentDao) QueryById(commentId int64) (*Comment, error) {
 // 获取全部根评论
 func (CommentDao) GetRootCommentsByArticle(ArticleId int64) ([]*Comment, error) {
 	var CommentList []*Comment
-	if err := db.DB.Model(&Comment{}).Where("article_id = ?", ArticleId).Find(&CommentList).Error; err != nil {
+	if err := db.DB.Model(&Comment{}).Where("article_id = ? and parent_id is NULL", ArticleId).Find(&CommentList).Error; err != nil {
 		log.Println("get root comments by article failed, err:", err)
 		return nil, err
 	}
