@@ -7,6 +7,15 @@ import (
 	"time"
 )
 
+type Like struct {
+	gorm.Model
+	DeletedAt gorm.DeletedAt `gorm:"index;comment:软删除时间" json:"deleted_at"`
+	ArticleID int64          `gorm:"index;comment:文章ID" json:"article_id"`
+	UserID    int64          `gorm:"index;comment:用户ID" json:"user_id"`
+	CreatedAt time.Time      `gorm:"comment:创建时间" json:"created_at"`
+	UpdatedAt time.Time      `gorm:"comment:更新时间" json:"updated_at"`
+}
+
 type LikeDao struct{}
 
 func NewLikeDaoInstance() *LikeDao {
