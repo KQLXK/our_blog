@@ -3,6 +3,7 @@ package handler
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"log"
 	"our_blog/commen/result"
 	"our_blog/model/dto"
@@ -151,6 +152,34 @@ func DeleteArticleHandler(c *gin.Context) {
 		}
 	}
 	result.Sucess(c, nil)
+}
+
+func ArticleCommentHandler(c *gin.Context) {
+	var req dto.ArticleCommentReq
+	ArticleIdStr := c.Param("article_id")
+	ArticleId, _ := strconv.ParseInt(ArticleIdStr, 10, 64)
+	req.ArticleId = ArticleId
+	if err := c.ShouldBind(&req); err != nil {
+		log.Println("get comment req failed, err:", err)
+		result.Error(c, result.GetReqErrStatus)
+		return
+	}
+	log.Println("get comment success, comment:", req)
+	userid, err := GetUserid(c)
+	if err != nil {
+		result.Error(c, result.ServerErrStatus)
+		return
+	}
+	data, err := article.ArticleComment(&req, userid)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			result.Error(c, result.ArticleNotFoundErrStatus)
+			return
+		} else {
+			result.Error(c, result.ServerErrStatus)
+		}
+	}
+	result.Sucess(c, data)
 }
 
 func GetUserid(c *gin.Context) (int64, error) {
