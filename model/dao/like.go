@@ -3,7 +3,6 @@ package dao
 import (
 	"gorm.io/gorm"
 	"our_blog/db"
-	"our_blog/model/dto"
 	"time"
 )
 
@@ -23,7 +22,7 @@ func NewLikeDaoInstance() *LikeDao {
 }
 
 func (d *LikeDao) CreateLike(articleID int64, userID int64) error {
-	like := dto.Like{
+	like := Like{
 		ArticleID: articleID,
 		UserID:    userID,
 		CreatedAt: time.Now(),
@@ -33,12 +32,12 @@ func (d *LikeDao) CreateLike(articleID int64, userID int64) error {
 }
 
 func (d *LikeDao) DeleteLike(articleID int64, userID int64) error {
-	result := db.DB.Where("article_id = ? AND user_id = ?", articleID, userID).Delete(&dto.Like{})
+	result := db.DB.Where("article_id = ? AND user_id = ?", articleID, userID).Delete(&Like{})
 	return result.Error
 }
 
 func (d *LikeDao) CheckLike(articleID int64, userID int64) (bool, error) {
-	var like dto.Like
+	var like Like
 	result := db.DB.Where("article_id = ? AND user_id = ?", articleID, userID).First(&like)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
