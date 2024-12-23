@@ -54,6 +54,7 @@ func (f *ArtQueryByIdFlow) Do() (*dto.ArtQueryByIdResp, error) {
 		CreateTime: article.CreateTime,
 		UpdateTime: article.UpdateTime,
 		LikeCount:  likeCount,
+		View:       article.View,
 	}, nil
 }
 
