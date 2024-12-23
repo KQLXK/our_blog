@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"gorm.io/gorm"
 	"log"
 	"our_blog/db"
 	"sync"
@@ -17,6 +18,7 @@ type Article struct {
 	Status     string    `gorm:"column:status"`                              // 文章状态
 	CreateTime time.Time `gorm:"column:create_time"`                         // 创建时间
 	UpdateTime time.Time `gorm:"column:update_time"`                         // 更新时间
+	View       int64     `gorm:"column:view"`                                // 点击量
 	// Tags     []Tag   `gorm:"many2many:article_tags;" json:"tags"` // 假设有一个标签表，并与文章是多对多关系
 }
 
@@ -96,5 +98,13 @@ func (ArticleDao) DeleteAnArticle(id int64) (err error) {
 		return err
 	}
 	log.Println("delete article sucess")
+	return nil
+}
+
+func (ArticleDao) IncreamentView(ArticleId int64) (err error) {
+	if err = db.DB.Model(&Article{}).Where("article_id = ?", ArticleId).Update("view", gorm.Expr("view + 1")).Error; err != nil {
+		log.Println("increament view failed, err:", err)
+		return err
+	}
 	return nil
 }

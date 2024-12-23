@@ -35,6 +35,9 @@ func (f *ArtQueryByIdFlow) Do() (*dto.ArtQueryByIdResp, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err = f.IncreaseView(); err != nil {
+		return nil, err
+	}
 	return &dto.ArtQueryByIdResp{
 		Title:      article.Title,
 		ArticleId:  article.ArticleId,
@@ -77,4 +80,11 @@ func (f *ArtQueryByIdFlow) QueryById() (*dao.Article, error) {
 		}
 	}
 	return article, nil
+}
+
+func (f *ArtQueryByIdFlow) IncreaseView() error {
+	if err := dao.NewArticleDaoInstance().IncreamentView(f.ArticleId); err != nil {
+		return err
+	}
+	return nil
 }
