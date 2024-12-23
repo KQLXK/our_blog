@@ -3,7 +3,6 @@ package article
 import (
 	"errors"
 	"gorm.io/gorm"
-	"our_blog/db"
 	"our_blog/model/dao"
 	"our_blog/model/dto"
 )
@@ -36,7 +35,7 @@ func (f *ArtQueryByIdFlow) Do() (*dto.ArtQueryByIdResp, error) {
 	if err != nil {
 		return nil, err
 	}
-	likeCount, err := f.GetLikeCount()
+	likeCount, err := dao.NewLikeDaoInstance().GetLikeCountByArticleId(f.ArticleId)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +49,7 @@ func (f *ArtQueryByIdFlow) Do() (*dto.ArtQueryByIdResp, error) {
 		Status:     article.Status,
 		CreateTime: article.CreateTime,
 		UpdateTime: article.UpdateTime,
-		LikeCount:  likeCount,
+		LikeCount:  int(likeCount),
 	}, nil
 }
 
@@ -83,10 +82,4 @@ func (f *ArtQueryByIdFlow) QueryById() (*dao.Article, error) {
 		}
 	}
 	return article, nil
-}
-
-func (f *ArtQueryByIdFlow) GetLikeCount() (int, error) {
-	var count int64
-	err := db.DB.Model(&dao.Like{}).Where("article_id = ?", f.ArticleId).Count(&count).Error
-	return int(count), err
 }
