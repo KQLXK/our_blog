@@ -77,6 +77,7 @@ type ArtQueryByIdResp struct {
 	Status     string    `json:"status"`
 	CreateTime time.Time `json:"create_time"`
 	UpdateTime time.Time `json:"update_time"`
+	LikeCount  int       `json:"like_count"`
 }
 
 type ArticleCommentReq struct {
