@@ -18,6 +18,7 @@ var (
 	InvalidDataErrStatus       = newstatus(http.StatusBadRequest, 40009, "参数不合法")
 	PasswordSameErrStatus      = newstatus(http.StatusBadRequest, 40010, "新密码与原密码相同")
 	AlreadyLikedErr            = newstatus(http.StatusBadRequest, 40011, "已点赞")
+	EmptyDataErrStatus         = newstatus(http.StatusBadRequest, 40012, "标题和分类不能为空")
 	//401未被授权的
 	UnLoginStatus      = newstatus(http.StatusUnauthorized, 40101, "请先登录")
 	TokenExiredStatus  = newstatus(http.StatusUnauthorized, 40102, "token过期，请重新登录")

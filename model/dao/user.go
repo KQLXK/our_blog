@@ -49,6 +49,7 @@ func (UserDao) GetUserByUsername(username string) (user User, err error) {
 		log.Println("get user by username failed, err: ", err)
 		return user, err
 	}
+	log.Println("get user by username success")
 	return user, nil
 }
 
@@ -58,6 +59,7 @@ func (UserDao) GetUserById(userId int64) (user User, err error) {
 		log.Println("get user by id failed, err : ", err)
 		return user, err
 	}
+	log.Println("get user by id sucess")
 	return user, nil
 }
 
@@ -67,6 +69,7 @@ func (UserDao) GetUserByEmail(email string) (user User, err error) {
 		log.Println("get user by email failed, err: ", err)
 		return user, err
 	}
+	log.Println("get user by email sucess")
 	return user, nil
 }
 
@@ -79,7 +82,6 @@ func (UserDao) UpdateUserPassword(userId int, password string) (err error) {
 	}
 	return nil
 }
-
 
 func (UserDao) UpdateUser(user User) error {
 	err := db.DB.Save(user).Error
@@ -99,7 +101,6 @@ func (UserDao) CheckPassword(username string, password string) (bool, error) {
 	}
 	return user.Password == password, nil
 }
-
 
 func (UserDao) IsAdmin(UserID int64) (bool, error) {
 	user, err := NewUserDaoInstance().GetUserById(UserID)

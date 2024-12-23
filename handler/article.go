@@ -13,11 +13,12 @@ import (
 
 func ArticlePublishHandler(c *gin.Context) {
 	var a dto.ArticlePublishReq
-	if err := c.ShouldBind(&a); err != nil {
+	if err := c.ShouldBindJSON(&a); err != nil {
 		log.Println("get article info failed, err:", err)
 		result.Error(c, result.GetReqErrStatus)
 		return
 	}
+	log.Println(a.Title, a.Excerpt, a.Username)
 	userid, ok := c.Get("userid")
 	if !ok {
 		log.Println("get userid failed")
@@ -33,8 +34,13 @@ func ArticlePublishHandler(c *gin.Context) {
 	}
 	data, err := article.ArticlePublish(a, userId)
 	if err != nil {
-		result.Error(c, result.ArticlePubErrStatus)
-		return
+		if err == article.EmptyDataErr {
+			result.Error(c, result.EmptyDataErrStatus)
+			return
+		} else {
+			result.Error(c, result.ArticlePubErrStatus)
+			return
+		}
 	}
 	result.Sucess(c, data)
 	return
@@ -114,6 +120,7 @@ func ArtQueryByPageHandler(c *gin.Context) {
 
 	pageSizeStr := c.Query("pagesize")
 	PageSize, _ := strconv.ParseInt(pageSizeStr, 10, 64)
+	log.Println("page:", Page, "pagesize:", PageSize)
 
 	UserId, err := GetUserid(c)
 	if err != nil {
@@ -141,10 +148,14 @@ func DeleteArticleHandler(c *gin.Context) {
 	}
 	articleid := c.Query("article_id")
 	ArticleId, _ := strconv.ParseInt(articleid, 10, 64)
+	log.Println("get article id success, articleid:", ArticleId)
 	err = article.ArticleDelete(ArticleId, UserId)
 	if err != nil {
 		if err == article.ArticleNotFoundErr {
 			result.Error(c, result.ArticleNotFoundErrStatus)
+			return
+		} else if err == article.DeleteUnauthorizedErr {
+			result.Error(c, result.UnauthorizedStatus)
 			return
 		} else {
 			result.Error(c, result.ServerErrStatus)
@@ -159,7 +170,8 @@ func ArticleCommentHandler(c *gin.Context) {
 	ArticleIdStr := c.Param("article_id")
 	ArticleId, _ := strconv.ParseInt(ArticleIdStr, 10, 64)
 	req.ArticleId = ArticleId
-	if err := c.ShouldBind(&req); err != nil {
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
 		log.Println("get comment req failed, err:", err)
 		result.Error(c, result.GetReqErrStatus)
 		return

@@ -74,6 +74,10 @@ func (ArticleDao) GetAricleListByPages(page, pageSize int) ([]Article, error) {
 		return nil, err
 	}
 	log.Println("get article bu pages sucess")
+	log.Printf("article list:")
+	for _, v := range articles {
+		log.Printf("%v ", v.Title)
+	}
 	return articles, nil
 }
 

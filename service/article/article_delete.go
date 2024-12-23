@@ -3,6 +3,7 @@ package article
 import (
 	"errors"
 	"gorm.io/gorm"
+	"log"
 	"our_blog/model/dao"
 )
 
@@ -46,9 +47,11 @@ func (f *ArticleDeleteFlow) CheckData() error {
 	}
 	//如果是管理员，不用验证userid
 	if isadmin, _ := dao.NewUserDaoInstance().IsAdmin(f.UserId); isadmin {
+		log.Println("admin delete")
 		return nil
 	}
 	if article.UserId != f.UserId {
+		log.Println("delete article failed, err:", DeleteUnauthorizedErr)
 		return DeleteUnauthorizedErr
 	}
 	return nil

@@ -1,9 +1,14 @@
 package article
 
 import (
+	"errors"
 	"our_blog/model/dao"
 	"our_blog/model/dto"
 	"time"
+)
+
+var (
+	EmptyDataErr = errors.New("标题不能为空")
 )
 
 type ArticlePublishFlow struct {
@@ -44,6 +49,13 @@ func (f *ArticlePublishFlow) Do() (*dto.ArticlePublishResp, error) {
 		Title:     f.Title,
 		CreateAt:  f.CreateAt,
 	}, nil
+}
+
+func (f *ArticlePublishFlow) CheckData() error {
+	if f.Title == "" || f.Category == "" {
+		return EmptyDataErr
+	}
+	return nil
 }
 
 func (f *ArticlePublishFlow) Publish() error {
