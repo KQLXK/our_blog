@@ -19,7 +19,7 @@ func UserRegisterHandler(c *gin.Context) {
 		result.Error(c, result.GetReqErrStatus)
 		return
 	}
-
+	log.Println(u)
 	data, err := user.UserRegister(&u)
 	if err != nil {
 		if err == user.UsernameExistErr {

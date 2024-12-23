@@ -1,6 +1,7 @@
 package route
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"our_blog/handler"
 	"our_blog/middleware"
@@ -9,6 +10,15 @@ import (
 func SetUpRouter() *gin.Engine {
 
 	r := gin.Default()
+
+	// 配置 CORS 中间件
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://127.0.0.1:5500"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"content-type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	r.Use(middleware.Auth())
 
