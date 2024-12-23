@@ -330,10 +330,10 @@
                         <div class="col-md-12 col-sm-12">
                             <article class="blog-teaser">
                                 <header>
-                                    <h3><a href="single.html?id=${arr[i].ArticleId}&Authorization=${Authorization}">${escapeHTML(arr[i].Title)}</a></h3>
-                                    <span class="meta">${escapeHTML(arr[i].Excerpt)}</span><br>
+                                    <h3><a href="single.html?id=${arr[i].ArticleId}&Authorization=${Authorization}">${arr[i].Title}</a></h3>
+                                    <span class="meta">${arr[i].Excerpt}</span><br>
                                     <br>
-                                    <span class="meta">作者:${escapeHTML(arr[i].UserId)}</span>
+                                    <span class="meta">作者:${arr[i].UserId}</span>
                                 </header>
                             </article>
                         </div>
@@ -361,7 +361,6 @@
 
         }
     </script>
-
 
 
     <script type="text/javascript">

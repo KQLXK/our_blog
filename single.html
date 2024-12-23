@@ -363,14 +363,11 @@
 
 
         btn2.onclick = function () {
-
+            // 构造请求 URL, 把 id 作为查询参数  
+            var url = `http://127.0.0.1:8080/article/delete?article_id=${id}`;
             $.ajax({
-                url: 'http://127.0.0.1:8080/article/delete',
+                url: url,
                 type: 'DELETE',
-                data: {
-                    article_id: id
-                    // 如果需要传递其他数据，可以在这里添加
-                },
                 headers: {
                     'Authorization': Authorization // 设置Authorization头
                 },
@@ -384,9 +381,17 @@
                         alert(response.message); // 显示服务器返回的消息
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("删除请求失败:", textStatus, errorThrown); // 记录错误
-                    alert("删除过程中发生错误"); // 提示用户错误信息
+                error: function (xhr, status, error) {
+                    console.error('评论请求失败:', status, error);
+
+                    // 尝试解析响应文本为 JSON 对象
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message || "发表过程中发生错误");
+                    } catch (e) {
+                        // 如果解析失败，显示原始的错误信息
+                        alert("发表过程中发生错误: " + xhr.responseText);
+                    }
                 }
             });
 
@@ -504,107 +509,98 @@
             var commentsContainer = $('#comments-container');
             var comments = data.data.comment;
 
-            if (!comments) {
-                commentsContainer.html('<p>暂无评论</p>');
+            if (!comments || comments.length === 0) {
+                commentsContainer.html('<p>暂无评论</p>'); // 当没有评论时的消息  
                 return;
             }
 
             var commentHTML = '';
 
-            // 渲染主评论
-            commentHTML += `
-                <div class="comment">
-                    <div class="meta">
-                        <h3><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;${comments.UserId}:</a></h3>
-                        <span class="date">&nbsp;&nbsp;&nbsp;&nbsp;${comments.CreateTime}</span>
-                        <span class="separator">-</span>
-                        <button class="btn-reply" data-user-id="${comments.UserId}" data-comment-id="${comments.CommentId}">回复</button>
-                    </div>
-                    <div class="body">
-                        ${comments.Content}
-                    </div>
-                    ${renderReplies(comments.Replies)}
-                </div>
-            `;
+            // 遍历评论数组并渲染每个评论  
+            comments.forEach(function (comment) {
+                commentHTML += `  
+            <div class="comment">  
+                <div class="meta">  
+                    <h3><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;${comment.UserId}:</a></h3>  
+                    <span class="date">&nbsp;&nbsp;&nbsp;&nbsp;${comment.CreateTime}</span>  
+                    <span class="separator">-</span>  
+                    <button class="btn-reply" data-user-id="${comment.UserId}" data-comment-id="${comment.CommentId}">回复</button>  
+                </div>  
+                <div class="body">  
+                    ${comment.Content}  
+                </div>  
+                ${renderReplies(comment.Replies)} <!-- 渲染回复 -->  
+            </div>  
+        `;
+            });
 
             commentsContainer.html(commentHTML);
 
-            // 绑定回复按钮事件
+            // 绑定回复按钮事件  
             $('.btn-reply').on('click', function () {
                 var userId = $(this).data('user-id');
                 var commentId = $(this).data('comment-id');
-                var parentId = $(this).data('parent-id');
 
-                // 检查是否已经存在回复表单
+                // 检查是否已经存在回复表单  
                 var replyForm = $(this).siblings('.reply-form');
                 if (replyForm.length > 0) {
-                    // 如果已经存在，移除回复表单
+                    // 如果已经存在，移除回复表单  
                     replyForm.remove();
                     $(this).show();
                     return;
                 }
 
-                // 隐藏回复按钮
+                // 隐藏回复按钮  
                 $(this).hide();
 
-                // 添加回复表单
-                var formHTML = `
-                <div class="reply-form">
-                    <input type="text" id="reply-input-${commentId}" placeholder="请输入回复内容" >
-                    <button class="btn-submit" data-comment-id="${commentId}" data-parent-id="${parentId}">提交</button>
-                    <button class="btn-cancel" data-comment-id="${commentId}">取消</button>
-                </div>
-            `;
+                // 添加回复表单  
+                var formHTML = `  
+        <div class="reply-form">  
+            <input type="text" id="reply-input-${commentId}" placeholder="请输入回复内容" >  
+            <button class="btn-submit" data-comment-id="${commentId}">提交</button>  
+            <button class="btn-cancel" data-comment-id="${commentId}">取消</button>  
+        </div>  
+    `;
                 $(this).after(formHTML);
 
-                // 绑定取消按钮事件
+                // 绑定取消按钮事件  
                 $('.btn-cancel').on('click', function () {
                     var commentId = $(this).data('comment-id');
                     $(this).closest('.reply-form').remove();
-                    $(`#comment-${commentId} .btn-reply`).show();
-
+                    $(this).siblings('.btn-reply').show();
                 });
 
-                // 绑定提交按钮事件
+                // 绑定提交按钮事件  
                 $('.btn-submit').on('click', function () {
-                    var commentId = $(this).data('comment-id');
-                    var parentId = $(this).data('parent-id');
                     var replyContent = $(`#reply-input-${commentId}`).val();
-                    console.log(commentId)
 
                     if (!replyContent) {
                         alert('回复内容不能为空');
                         return;
                     }
 
-                    // 发送AJAX POST请求提交回复
+                    // 发送AJAX POST请求提交回复  
                     $.ajax({
                         url: 'http://127.0.0.1:8080/article/{article_id}/comment'.replace('{article_id}', article_id),
                         type: 'POST',
                         data: JSON.stringify({
-
                             content: replyContent,
                             parent_id: commentId
-                            // 注意：不要在这里传递 Authorization
                         }),
                         headers: {
-                            'Authorization': Authorization, // 设置Authorization头
-
+                            'Authorization': Authorization, // 设置 Authorization 头  
                         },
-                        dataType: 'json', // 期望服务器返回的数据类型为JSON
+                        dataType: 'json',
                         success: function (response) {
                             console.log("回复提交成功:", response);
                             alert("回复提交成功");
-                            // 重新加载评论
+
+                            // 重新加载评论  
                             $.ajax({
                                 url: 'http://127.0.0.1:8080/comment/list/{article_id}'.replace('{article_id}', article_id),
                                 type: 'GET',
-                                data: ({
-                                    article_id: article_id
-                                }),
                                 headers: {
-                                    'Authorization': Authorization, // 设置Authorization头
-
+                                    'Authorization': Authorization, // 设置 Authorization 头  
                                 },
                                 dataType: 'json',
                                 success: function (data) {
@@ -642,10 +638,12 @@
         btn5.onclick = function () {
 
             var comment_body = comment_bodyInput.value;
+            console.log("Comment Body:", comment_body);
 
             $.ajax({
                 url: 'http://127.0.0.1:8080/article/{article_id}/comment'.replace('{article_id}', article_id),
                 type: 'POST',
+                contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
                     content: comment_body,
                     parent_id: null // 如果 parent_id 是字符串 "null"，请确保服务器端能够正确解析
