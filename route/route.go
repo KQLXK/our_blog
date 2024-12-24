@@ -51,6 +51,10 @@ func SetUpRouter() *gin.Engine {
 		ArticleGroup.POST("/:article_id/like", handler.ArticleLikeHandler)
 		//文章评论
 		ArticleGroup.POST("/:article_id/comment", handler.ArticleCommentHandler)
+		//搜索文章
+		ArticleGroup.GET("/search", handler.ArticleSearchHandler)
+		//文章分类
+		ArticleGroup.GET("/category", handler.ArticleCategoryHandler)
 	}
 
 	CommentGroup := r.Group("/comment")

@@ -101,6 +101,24 @@ func (ArticleDao) DeleteAnArticle(id int64) (err error) {
 	return nil
 }
 
+func (ArticleDao) Search(SearchStr string) (ArticleList []*Article, err error) {
+	if err = db.DB.Model(&Article{}).Where("title like ?", "%"+SearchStr+"%").Find(&ArticleList).Error; err != nil {
+		log.Println("search article failed, err:", err)
+		return nil, err
+	}
+	log.Println("search article success")
+	return ArticleList, nil
+}
+
+func (ArticleDao) Category(Category string) (ArticleList []*Article, err error) {
+	if err = db.DB.Model(&Article{}).Where("category = ?", Category).Find(&ArticleList).Error; err != nil {
+		log.Println("category article failed, err:", err)
+		return nil, err
+	}
+	log.Println("category article success")
+	return ArticleList, nil
+}
+
 func (ArticleDao) IncreamentView(ArticleId int64) (err error) {
 	if err = db.DB.Model(&Article{}).Where("article_id = ?", ArticleId).Update("view", gorm.Expr("view + 1")).Error; err != nil {
 		log.Println("increament view failed, err:", err)

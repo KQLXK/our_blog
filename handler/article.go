@@ -189,9 +189,42 @@ func ArticleCommentHandler(c *gin.Context) {
 			return
 		} else {
 			result.Error(c, result.ServerErrStatus)
+			return
 		}
 	}
 	result.Sucess(c, data)
+}
+
+func ArticleSearchHandler(c *gin.Context) {
+	SearchStr := c.Query("search")
+	data, err := article.ArticleSearch(SearchStr)
+	if err != nil {
+		if err == article.ArticleNotFoundErr {
+			result.Error(c, result.ArticleNotFoundErrStatus)
+			return
+		} else {
+			result.Error(c, result.ServerErrStatus)
+			return
+		}
+	}
+	result.Sucess(c, data)
+	return
+}
+
+func ArticleCategoryHandler(c *gin.Context) {
+	CategoryStr := c.Query("Category")
+	data, err := article.ArticleCategory(CategoryStr)
+	if err != nil {
+		if err == article.ArticleNotFoundErr {
+			result.Error(c, result.ArticleNotFoundErrStatus)
+			return
+		} else {
+			result.Error(c, result.ServerErrStatus)
+			return
+		}
+	}
+	result.Sucess(c, data)
+	return
 }
 
 func GetUserid(c *gin.Context) (int64, error) {
