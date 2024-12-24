@@ -379,29 +379,50 @@
 
         btn.onclick = function () {
             var searchbox = searchboxInput.value;
+            console.log(searchbox);
 
 
             $.ajax({
-                url: 'http://127.0.0.1:8080/article/querybyid/{article_id}'.replace('{article_id}', searchbox),
+                url: 'http://127.0.0.1:8080/article/search',
                 type: 'GET',
-                data: ({ article_id: searchbox }),
-                contentType: 'application/json',                  // 设置内容类型为 JSON
-                headers: {
-                    'Authorization': Authorization               // 设置 Authorization 头
+                data: {
+                    search: searchbox
                 },
-                dataType: 'json',                                 // 期望服务器返回的数据类型为 JSON
+                headers: {
+                    'Authorization': Authorization
+                },
+                dataType: 'json',
                 success: function (response) {
-                    console.log(response);                        // 在控制台打印响应数据
+                    console.log(response);
 
                     if (response.message === "success") {
-                        location.href = `search.html?id=${searchbox}&Authorization=${Authorization}`;
+                        var list = document.getElementById("list");
+                        var str = "";
+
+                        for (var i = 0; i < response.data.length; i++) {
+                            str += `
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <article class="blog-teaser">
+                                            <header>
+                                                <h3><a href="single.html?id=${response.data[i].ArticleId}&Authorization=${Authorization}">${response.data[i].Title}</a></h3>
+                                                <span class="meta">${response.data[i].Excerpt}</span><br>
+                                                <br>
+                                                <span class="meta">作者:${response.data[i].UserId}</span>
+                                            </header>
+                                        </article>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        list.innerHTML = str;
                     } else {
-                        alert(response.message);                   // 显示服务器返回的消息
+                        alert(response.message);
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('请求失败:', error);             // 在控制台打印错误信息
-                    alert('请求过程中发生错误');                  // 提示用户错误信息
+                    console.error('请求失败:', error);
+                    alert('请求过程中发生错误');
                 }
             });
 
