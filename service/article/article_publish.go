@@ -68,6 +68,7 @@ func (f *ArticlePublishFlow) Publish() error {
 		UserId:     f.UserId,
 		CreateTime: f.CreateAt,
 		UpdateTime: f.UpdateAt,
+		View:       0,
 	}
 	if err := dao.NewArticleDaoInstance().CreateAnArticle(article); err != nil {
 		return err

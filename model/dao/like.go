@@ -47,3 +47,9 @@ func (d *LikeDao) CheckLike(articleID int64, userID int64) (bool, error) {
 	}
 	return true, nil
 }
+
+func (d *LikeDao) GetLikeCountByArticleId(articleID int64) (int64, error) {
+	var count int64
+	err := db.DB.Model(&Like{}).Where("article_id = ?", articleID).Count(&count).Error
+	return count, err
+}
